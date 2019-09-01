@@ -10,7 +10,7 @@ export default class HomePage extends Component<Props> {
 
   render() {
     return (
-      <div>
+      <div style={{ display: 'flex' }}>
         <SideBar></SideBar>
         <Content></Content>
       </div>
