@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import Footer from '../../components/footer/Footer';
-import styles from './Content.css'
+import Header from '../../components/header/Header';
+import ContentBody from '../contentBody/ContentBody';
+import styles from './Content.css';
+import globalStyles from '../../app.global.css';
 
 export default class Content extends Component {
   render() {
     return (
-      <div className={styles.container}>
-        <h1>Content</h1>
+      <div className={`${styles.container}`}>
+        <Header></Header>
+        <ContentBody></ContentBody>
         <Footer></Footer>
       </div>
     );
