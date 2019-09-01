@@ -1,6 +1,6 @@
-.container {
-    background-color: lightgray;
-    height: 100vh;
-    width: 100%;
-  }
-  
+:local(.container) {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
