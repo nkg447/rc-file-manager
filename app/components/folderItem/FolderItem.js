@@ -4,8 +4,8 @@ import styles from './FolderItem.css';
 export default class FolderItem extends Component {
   render() {
     return (
-      <div>
-        <h3>{this.props.children.name}</h3>
+      <div className={styles.container}>
+        <p className={styles.title}>{this.props.children.name}</p>
       </div>
     );
   }
