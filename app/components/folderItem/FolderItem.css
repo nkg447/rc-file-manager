@@ -1,0 +1,11 @@
+:local(.container) {
+    height: 6rem;
+    width: 6rem;
+  }
+  
+  :local(.title) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  

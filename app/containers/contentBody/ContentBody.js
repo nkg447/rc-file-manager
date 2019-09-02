@@ -25,7 +25,7 @@ class ContentBody extends Component {
 
   render() {
     return (
-      <div>
+      <div className={styles.container}>
         {this.state.folders.map(folder => (
           <FolderItem>{folder}</FolderItem>
         ))}
