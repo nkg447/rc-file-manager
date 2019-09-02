@@ -1,9 +1,10 @@
 import { changeAddress } from '../actions/fileManager';
 import cloneDeep from 'lodash/cloneDeep';
-import os from 'os'
+import os from 'os';
 
 const initialState = {
-  address: os.homedir()
+  address: os.homedir(),
+  home: os.homedir()
 };
 
 export default function fileManager(state = initialState, action) {
