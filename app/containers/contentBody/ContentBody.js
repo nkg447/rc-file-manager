@@ -6,31 +6,28 @@ import FileItem from '../../components/fileItem/FileItem';
 import FolderItem from '../../components/folderItem/FolderItem';
 
 class ContentBody extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      folders: [],
-      files: []
-    };
-  }
-
-  componentDidMount() {
+  readDir = () => {
+    console.log(this.props);
     const address = this.props.address;
     const files = fs.readdirSync(address, { withFileTypes: true });
-    this.setState({
+    return {
       folders: files.filter(file => file.isDirectory()),
       files: files.filter(file => file.isFile())
-    });
-  }
+    };
+  };
 
   render() {
+    const { files, folders } = this.readDir();
     return (
       <div className={styles.container}>
-        {this.state.folders.map(folder => (
-          <FolderItem>{folder}</FolderItem>
+        {folders.map(folder => (
+          <FolderItem
+            name={folder.name}
+            parent={this.props.address}
+          ></FolderItem>
         ))}
-        {this.state.files.map(file => (
-          <FileItem>{file}</FileItem>
+        {files.map(file => (
+          <FileItem name={file.name} parent={this.props.address}></FileItem>
         ))}
       </div>
     );
