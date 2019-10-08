@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import SideBar from '../components/sidebar/SideBar';
+import SideBar from './sidebar/SideBar';
 import Content from './content/Content';
 
 type Props = {};
