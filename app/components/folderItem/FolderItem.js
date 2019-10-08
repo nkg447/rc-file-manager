@@ -6,14 +6,19 @@ import path from 'path';
 import { FOLDER_ICON } from '../../assets';
 
 class FolderItem extends Component {
-  onClickHandler = () => {
+  onDoubleClickHandler = () => {
     const folderPath = path.join(this.props.parent, this.props.name);
     this.props.changeAddress(folderPath);
   };
+
   render() {
-    const { name } = this.props;
+    const { name, selected, ...otherProps } = this.props;
     return (
-      <div className={styles.container}>
+      <div
+        onDoubleClick={this.onDoubleClickHandler}
+        className={styles.container}
+        {...otherProps}
+      >
         <img src={FOLDER_ICON} className={styles.icon}></img>
         <p>{name}</p>
       </div>

@@ -4,9 +4,9 @@ import { FILE_ICON } from '../../assets';
 
 export default class FileItem extends Component {
   render() {
-    const { name } = this.props;
+    const { name, selected, ...otherProps } = this.props;
     return (
-      <div className={styles.container}>
+      <div className={styles.container} {...otherProps}>
         <img src={FILE_ICON} className={styles.icon}></img>
         <p>{name}</p>
       </div>

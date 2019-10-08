@@ -6,8 +6,15 @@ import FileItem from '../../components/fileItem/FileItem';
 import FolderItem from '../../components/folderItem/FolderItem';
 
 class ContentBody extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedFile: null,
+      selectedFolder: null
+    };
+  }
+
   readDir = () => {
-    console.log(this.props);
     const address = this.props.address;
     const files = fs.readdirSync(address, { withFileTypes: true });
     return {
@@ -16,18 +23,40 @@ class ContentBody extends Component {
     };
   };
 
+  onFileSelect(type, index) {
+    if (type === 'file')
+      this.setState({
+        selectedFile: index,
+        selectedFolder: null
+      });
+    else
+      this.setState({
+        selectedFile: null,
+        selectedFolder: index
+      });
+  }
+
   render() {
     const { files, folders } = this.readDir();
     return (
       <div className={styles.container}>
-        {folders.map(folder => (
+        {folders.map((folder, i) => (
           <FolderItem
+            key={i}
             name={folder.name}
             parent={this.props.address}
+            selected={this.state.selectedFolder === i}
+            onClick={() => this.onFileSelect('folder', i)}
           ></FolderItem>
         ))}
-        {files.map(file => (
-          <FileItem name={file.name} parent={this.props.address}></FileItem>
+        {files.map((file, i) => (
+          <FileItem
+            key={i}
+            name={file.name}
+            parent={this.props.address}
+            selected={this.state.selectedFile === i}
+            onClick={() => this.onFileSelect('file', i)}
+          ></FileItem>
         ))}
       </div>
     );
