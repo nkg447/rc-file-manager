@@ -3,6 +3,7 @@ import styles from './FolderItem.css';
 import { connect } from 'react-redux';
 import { changeAddress } from '../../actions/fileManager';
 import path from 'path';
+import { FOLDER_ICON } from '../../assets';
 
 class FolderItem extends Component {
   onClickHandler = () => {
@@ -10,9 +11,11 @@ class FolderItem extends Component {
     this.props.changeAddress(folderPath);
   };
   render() {
+    const { name } = this.props;
     return (
-      <div onClick={this.onClickHandler} className={styles.container}>
-        <p className={styles.title}>{this.props.name}</p>
+      <div className={styles.container}>
+        <img src={FOLDER_ICON} className={styles.icon}></img>
+        <p>{name}</p>
       </div>
     );
   }

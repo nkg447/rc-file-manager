@@ -8,3 +8,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+:local(.icon) {
+  height: 50px;
+  width: 50px;
+}
