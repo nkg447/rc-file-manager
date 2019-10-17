@@ -20,6 +20,7 @@ class FolderItem extends Component {
         {...otherProps}
       >
         <img src={FOLDER_ICON} className={styles.icon}></img>
+        {/* <svg className={styles.container}>{FOLDER_ICON}</svg> */}
         <p>{name}</p>
       </div>
     );
