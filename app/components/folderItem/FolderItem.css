@@ -14,3 +14,7 @@
   width: 50px;
   color: brown;
 }
+
+:local(.name) {
+  font-size: 12px;
+}

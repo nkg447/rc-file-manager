@@ -8,7 +8,7 @@ export default class FileItem extends Component {
     return (
       <div className={styles.container} {...otherProps}>
         <img src={FILE_ICON} className={styles.icon}></img>
-        <p>{name}</p>
+        <p className={styles.name}>{name.substring(0, 8) + '...'}</p>
       </div>
     );
   }
