@@ -1,6 +1,7 @@
 :local(.container) {
   height: 6rem;
   width: 6rem;
+  padding: 1rem;
 }
 
 :local(.title) {
@@ -12,4 +13,9 @@
 :local(.icon) {
   height: 50px;
   width: 50px;
+}
+
+:local(.name) {
+  font-size: 12px;
+  word-break: break-all;
 }

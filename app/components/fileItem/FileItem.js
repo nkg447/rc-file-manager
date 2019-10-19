@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import styles from './FileItem.css';
-import { FILE_ICON } from '../../assets';
+import { connect } from 'react-redux';
+import { FOLDER_ICON, FILE_ICON } from '../../assets';
 
-export default class FileItem extends Component {
-  render() {
-    const { name } = this.props;
-    return (
-      <div className={styles.container}>
-        <img src={FILE_ICON} className={styles.icon}></img>
-        <p>{name}</p>
-      </div>
-    );
-  }
-}
+export default props => {
+  const { file, ...otherProps } = props;
+  const isDirectory = file.isDirectory();
+  const icon = isDirectory ? FOLDER_ICON : FILE_ICON;
+  return (
+    <div className={styles.container} {...otherProps}>
+      <img src={icon} className={styles.icon}></img>
+      <p className={styles.name}>
+        {file.name.substring(0, 18) + ((file.name.length > 18) ? '...' : '')}
+      </p>
+    </div>
+  );
+};
