@@ -5,6 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import { changeAddress } from '../../actions/fileManager';
 import FileItem from '../../components/fileItem/FileItem';
+import { shell } from 'electron';
 
 class ContentBody extends Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class ContentBody extends Component {
     const address = this.props.address;
     const files = fs
       .readdirSync(address, { withFileTypes: true })
+      .filter(file => !file.name.startsWith('.'))
       .sort((f1, f2) => {
         if (f1.isDirectory() == f2.isDirectory()) {
           return f1.name.localeCompare(f2.name);
@@ -28,8 +30,12 @@ class ContentBody extends Component {
   };
 
   onDoubleClickHandler = file => {
-    const folderPath = path.join(this.props.address, file.name);
-    this.props.changeAddress(folderPath);
+    const filePath = path.join(this.props.address, file.name);
+    if (file.isDirectory()) {
+      this.props.changeAddress(filePath);
+    } else {
+      console.log(shell.openItem(filePath));
+    }
   };
 
   render() {
