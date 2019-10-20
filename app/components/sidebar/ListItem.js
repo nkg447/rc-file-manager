@@ -12,11 +12,7 @@ export default props => {
       {...otherProps}
     >
       <p>{text}</p>
-      {item.external ? (
-        <EJECT_ICON
-          className={styles.icon}
-        />
-      ) : null}
+      {item.external ? <EJECT_ICON className={styles.icon} /> : null}
     </li>
   );
 };
