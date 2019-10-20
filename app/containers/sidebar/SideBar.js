@@ -3,28 +3,43 @@ import styles from './Sidebar.css';
 import ListItem from '../../components/sidebar/ListItem';
 import { connect } from 'react-redux';
 import { changeAddress } from '../../actions/fileManager';
-import searchFiles from "../../utils/searchFilesWithName"
+import fs from 'fs';
+import searchFiles from '../../utils/searchFilesWithName';
+const USERNAME = require('os').userInfo().username;
 
 const path = require('path');
 class SideBar extends Component {
   constructor(props) {
     super(props);
+    const { home } = props.dirs;
     this.sideList = {
-      Home: '',
-      Desktop: 'Desktop',
-      Documents: 'Documents',
-      Downloads: 'Downloads',
-      Music: 'Music',
-      Pictures: 'Pictures',
-      Videos: 'Videos'
+      Home: home,
+      Desktop: path.join(home, 'Desktop'),
+      Documents: path.join(home, 'Documents'),
+      Downloads: path.join(home, 'Downloads'),
+      Music: path.join(home, 'Music'),
+      Pictures: path.join(home, 'Pictures'),
+      Videos: path.join(home, 'Videos'),
+      ...this.getMountedDevices()
     };
   }
 
+  getMountedDevices = () => {
+    // mounted devices
+    const mountedDevices = {};
+    fs.readdirSync(`/media/${USERNAME}/`, {
+      withFileTypes: true
+    }).forEach(file => {
+      mountedDevices[file.name] = path.join(`/media/${USERNAME}/`, file.name);
+    });
+    return mountedDevices;
+  };
+
   render = () => {
     let newPath;
-    let { sideList} = this;
-    let {home, address} = this.props.dirs;
-    let {changeAddress} = this.props;
+    let { sideList } = this;
+    let { home, address } = this.props.dirs;
+    let { changeAddress } = this.props;
     // searchFiles("surv",address);
 
     return (
@@ -34,13 +49,14 @@ class SideBar extends Component {
         </div>
         <div>
           <ul className={styles.optionsList}>
-            {Object.keys(sideList).map(addr => {
-              newPath = path.join(home, sideList[addr]);
+            {Object.keys(sideList).map((addr, i) => {
+              newPath = sideList[addr];
               return (
                 <ListItem
+                  key={i}
                   text={addr}
                   address={newPath}
-                  className={address === newPath?styles.activeListItem:null}
+                  className={address === newPath ? styles.activeListItem : null}
                   onClick={redirPath => changeAddress(redirPath)}
                 />
               );
