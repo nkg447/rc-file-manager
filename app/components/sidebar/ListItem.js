@@ -13,7 +13,9 @@ export default props => {
     >
       <p>{text}</p>
       {item.external ? (
-        <img src={EJECT_ICON} className={styles.icon}></img>
+        <EJECT_ICON
+          className={styles.icon}
+        />
       ) : null}
     </li>
   );

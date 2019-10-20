@@ -1,3 +1,5 @@
-export const FOLDER_ICON = require('./icons/folder-solid.svg');
-export const FILE_ICON = require('./icons/file-solid.svg');
-export const EJECT_ICON = require('./icons/eject-solid.svg');
+import EJECT_ICON from './icons/EjectIcon';
+import FILE_ICON from './icons/FileIcon';
+import FOLDER_ICON from './icons/FolderIcon';
+
+export { FOLDER_ICON, FILE_ICON, EJECT_ICON };
