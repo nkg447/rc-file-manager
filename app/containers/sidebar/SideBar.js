@@ -3,6 +3,7 @@ import styles from './Sidebar.css';
 import ListItem from '../../components/sidebar/ListItem';
 import { connect } from 'react-redux';
 import { changeAddress } from '../../actions/fileManager';
+import searchFiles from "../../utils/searchFilesWithName"
 
 const path = require('path');
 class SideBar extends Component {
@@ -24,6 +25,7 @@ class SideBar extends Component {
     let { sideList} = this;
     let {home, address} = this.props.dirs;
     let {changeAddress} = this.props;
+    // searchFiles("surv",address);
 
     return (
       <div className={styles.container}>
