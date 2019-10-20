@@ -13,13 +13,13 @@ class SideBar extends Component {
     super(props);
     const { home } = props.dirs;
     this.sideList = {
-      Home: home,
-      Desktop: path.join(home, 'Desktop'),
-      Documents: path.join(home, 'Documents'),
-      Downloads: path.join(home, 'Downloads'),
-      Music: path.join(home, 'Music'),
-      Pictures: path.join(home, 'Pictures'),
-      Videos: path.join(home, 'Videos'),
+      Home: { path: home },
+      Desktop: { path: path.join(home, 'Desktop') },
+      Documents: { path: path.join(home, 'Documents') },
+      Downloads: { path: path.join(home, 'Downloads') },
+      Music: { path: path.join(home, 'Music') },
+      Pictures: { path: path.join(home, 'Pictures') },
+      Videos: { path: path.join(home, 'Videos') },
       ...this.getMountedDevices()
     };
   }
@@ -30,13 +30,15 @@ class SideBar extends Component {
     fs.readdirSync(`/media/${USERNAME}/`, {
       withFileTypes: true
     }).forEach(file => {
-      mountedDevices[file.name] = path.join(`/media/${USERNAME}/`, file.name);
+      mountedDevices[file.name] = {
+        path: path.join(`/media/${USERNAME}/`, file.name),
+        external: true
+      };
     });
     return mountedDevices;
   };
 
   render = () => {
-    let newPath;
     let { sideList } = this;
     let { home, address } = this.props.dirs;
     let { changeAddress } = this.props;
@@ -50,14 +52,14 @@ class SideBar extends Component {
         <div>
           <ul className={styles.optionsList}>
             {Object.keys(sideList).map((addr, i) => {
-              newPath = sideList[addr];
+              const newPath = sideList[addr].path;
               return (
                 <ListItem
                   key={i}
                   text={addr}
-                  address={newPath}
-                  className={address === newPath ? styles.activeListItem : null}
-                  onClick={redirPath => changeAddress(redirPath)}
+                  item={sideList[addr]}
+                  active={address === newPath}
+                  onClick={() => changeAddress(newPath)}
                 />
               );
             })}

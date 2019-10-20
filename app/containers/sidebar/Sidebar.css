@@ -19,21 +19,3 @@
   padding: 0;
   margin: 0;
 }
-
-:local(.optionsList > li) {
-  width: 100%;
-  padding: 1em;
-  text-align: center;
-  color: inherit;
-  cursor: pointer;
-}
-
-:local(.optionsList > li:hover) {
-  background-color: #74b1be;
-  color: #2c2e3b;
-}
-
-:local(.activeListItem){
-  background-color: #74b1be;
-  color: #2c2e3b !important;
-}
