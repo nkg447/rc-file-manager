@@ -1,45 +1,21 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import styles from './ContentBody.css';
-import fs from 'fs';
-import path from 'path';
-import { changeAddress } from '../../actions/fileManager';
 import FileItem from '../../components/fileItem/FileItem';
 import { shell } from 'electron';
 
-class ContentBody extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      address: props.address
-    };
-  }
-
-  readDir = () => {
-    const address = this.props.address;
-    const files = fs
-      .readdirSync(address, { withFileTypes: true })
-      .filter(file => !file.name.startsWith('.'))
-      .sort((f1, f2) => {
-        if (f1.isDirectory() == f2.isDirectory()) {
-          return f1.name.localeCompare(f2.name);
-        }
-        return f1.isDirectory() ? -1 : 1;
-      });
-    return files;
-  };
-
+const path = require('path');
+export default class ContentBody extends Component {
   onDoubleClickHandler = file => {
     const filePath = path.join(this.props.address, file.name);
     if (file.isDirectory()) {
       this.props.changeAddress(filePath);
     } else {
-      console.log(shell.openItem(filePath));
+      shell.openItem(filePath);
     }
   };
 
   render() {
-    const files = this.readDir();
+    const { files, address } = this.props;
     return (
       <div className={styles.container}>
         {files.map((file, i) => (
@@ -53,20 +29,3 @@ class ContentBody extends Component {
     );
   }
 }
-
-const mapStateToProps = state => {
-  return {
-    address: state.fileManager.address
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    changeAddress: address => dispatch(changeAddress(address))
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ContentBody);
