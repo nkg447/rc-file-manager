@@ -5,38 +5,18 @@ import { connect } from 'react-redux';
 import { changeAddress } from '../../actions/fileManager';
 import fs from 'fs';
 import searchFiles from '../../utils/searchFilesWithName';
-const USERNAME = require('os').userInfo().username;
-
+import FileSystemService from '../../utils/FileSystemService'
 const path = require('path');
+
 class SideBar extends Component {
   constructor(props) {
     super(props);
     const { home } = props.dirs;
     this.sideList = {
-      Home: { path: home },
-      Desktop: { path: path.join(home, 'Desktop') },
-      Documents: { path: path.join(home, 'Documents') },
-      Downloads: { path: path.join(home, 'Downloads') },
-      Music: { path: path.join(home, 'Music') },
-      Pictures: { path: path.join(home, 'Pictures') },
-      Videos: { path: path.join(home, 'Videos') },
-      ...this.getMountedDevices()
+      ...FileSystemService.getHomeDirectories(),
+      ...FileSystemService.getMountedDevices()
     };
   }
-
-  getMountedDevices = () => {
-    // mounted devices
-    const mountedDevices = {};
-    fs.readdirSync(`/media/${USERNAME}/`, {
-      withFileTypes: true
-    }).forEach(file => {
-      mountedDevices[file.name] = {
-        path: path.join(`/media/${USERNAME}/`, file.name),
-        external: true
-      };
-    });
-    return mountedDevices;
-  };
 
   render = () => {
     let { sideList } = this;
