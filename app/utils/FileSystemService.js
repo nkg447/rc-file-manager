@@ -37,7 +37,12 @@ const getHomeDirectories = () => {
   return availableDirs;
 };
 
+const deleteFile = (path) => {
+  fs.unlinkSync(path)
+};
+
 export default {
   getMountedDevices,
-  getHomeDirectories
+  getHomeDirectories,
+  deleteFile
 };
