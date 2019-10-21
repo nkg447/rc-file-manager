@@ -2,11 +2,11 @@ import React from 'react';
 import ContextMenuItem from './contextMenuItem';
 
 export default props => {
-  const { bounds, onOpen } = props;
+  const { bounds, onOpen, onDelete } = props;
   return (
     <div style={{ ...styles.container, top: bounds.y, left: bounds.x }}>
       <ContextMenuItem onClick={onOpen}>Open</ContextMenuItem>
-      <ContextMenuItem>Delete</ContextMenuItem>
+      <ContextMenuItem onClick={onDelete}>Delete</ContextMenuItem>
     </div>
   );
 };

@@ -3,6 +3,7 @@ import styles from './ContentBody.css';
 import FileItem from '../../components/fileItem/FileItem';
 import { shell } from 'electron';
 import ContextMenu from '../../components/contextMenu/contextMenu';
+import FileSystemService from '../../utils/FileSystemService';
 
 const path = require('path');
 export default class ContentBody extends Component {
@@ -23,6 +24,15 @@ export default class ContentBody extends Component {
     } else {
       shell.openItem(filePath);
     }
+  };
+
+  onDeleteHandler = file => {
+    const filePath = path.join(this.props.address, file.name);
+    FileSystemService.deleteFile(filePath);
+    this.setState(prevState => ({
+      files: prevState.files.filter(f => f.name !== file.name),
+      showContextMenu: false
+    }));
   };
 
   updateState = () => {
@@ -77,6 +87,10 @@ export default class ContentBody extends Component {
         {this.state.showContextMenu ? (
           <ContextMenu
             onOpen={this.onDoubleClickHandler.bind(
+              this,
+              this.state.contextMenuBounds.file
+            )}
+            onDelete={this.onDeleteHandler.bind(
               this,
               this.state.contextMenuBounds.file
             )}
