@@ -1,12 +1,13 @@
-import { changeAddress , Types} from '../actions/fileManager';
+import { changeAddress, Types } from '../actions/fileManager';
 import cloneDeep from 'lodash/cloneDeep';
 import os from 'os';
-
 
 const initialState = {
   address: os.homedir(),
   home: os.homedir(),
-  searching:false,
+  navigationStack: [os.homedir()],
+  currentStackIndex: 0,
+  searching: false,
   searchResultsList: {
     folders: [],
     files: []
@@ -18,7 +19,24 @@ export default function fileManager(state = initialState, action) {
   switch (action.type) {
     case Types.CHANGE_ADDRESS: {
       const newState = cloneDeep(state);
-      newState.address = action.payload;
+      newState.navigationStack = newState.navigationStack.slice(
+        0,
+        newState.currentStackIndex + 1
+      );
+      newState.navigationStack.push(action.payload);
+      newState.currentStackIndex++;
+      newState.address = newState.navigationStack[newState.currentStackIndex];
+      return newState;
+    }
+
+    case Types.NAVIGATE_ADDRESS: {
+      const newState = cloneDeep(state);
+      if (action.payload === 'prev') {
+        newState.currentStackIndex--;
+      } else {
+        newState.currentStackIndex++;
+      }
+      newState.address = newState.navigationStack[newState.currentStackIndex];
       return newState;
     }
 
@@ -48,11 +66,12 @@ export default function fileManager(state = initialState, action) {
       return newState;
     }
 
-    case Types.REFRESH_SEARCH_RESULTS:{
+    case Types.REFRESH_SEARCH_RESULTS: {
       const newState = cloneDeep(state);
       newState.searchResultsList = {
-        files : [], folders: []
-      }
+        files: [],
+        folders: []
+      };
       return newState;
     }
 

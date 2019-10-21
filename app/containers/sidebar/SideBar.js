@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import styles from './Sidebar.css';
 import ListItem from '../../components/sidebar/ListItem';
+import SidebarTop from '../../components/sidebar/SidebarTop';
 import { connect } from 'react-redux';
-import { changeAddress } from '../../actions/fileManager';
+import { changeAddress, navigateAddress } from '../../actions/fileManager';
 import fs from 'fs';
 import searchFiles from '../../utils/searchFilesWithName';
-import FileSystemService from '../../utils/FileSystemService'
+import FileSystemService from '../../utils/FileSystemService';
 const path = require('path');
 
 class SideBar extends Component {
@@ -21,14 +22,12 @@ class SideBar extends Component {
   render = () => {
     let { sideList } = this;
     let { home, address } = this.props.dirs;
-    let { changeAddress } = this.props;
+    let { changeAddress, navigateAddress } = this.props;
     // searchFiles("surv",address);
 
     return (
       <div className={styles.container}>
-        <div className={styles.logo}>
-          <h1>Sidebar</h1>
-        </div>
+        <SidebarTop {...this.props.dirs} {...this.props}></SidebarTop>
         <div>
           <ul className={styles.optionsList}>
             {Object.keys(sideList).map((addr, i) => {
@@ -56,7 +55,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeAddress: address => dispatch(changeAddress(address))
+    changeAddress: address => dispatch(changeAddress(address)),
+    navigateAddress: toAddress => dispatch(navigateAddress(toAddress))
   };
 };
 
