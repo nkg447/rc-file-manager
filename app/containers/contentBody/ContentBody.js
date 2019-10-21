@@ -47,6 +47,7 @@ export default class ContentBody extends Component {
           <FileItem
             key={i}
             file={file}
+            address={address}
             onDoubleClick={this.onDoubleClickHandler.bind(this, file)}
             onClick={this.selectFile.bind(this, i)}
             selected={selected[i] ? true : false}
