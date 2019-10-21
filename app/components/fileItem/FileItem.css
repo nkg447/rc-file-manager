@@ -22,7 +22,6 @@
 
 :local(.icon) {
   height: 50px;
-  width: 50px;
 }
 
 :local(.name) {
