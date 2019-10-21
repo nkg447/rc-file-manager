@@ -6,13 +6,21 @@ export const Types = {
   CHANGE_ADDRESS: "CHANGE_ADDRESS",
   ADD_FILE_TO_RESULT_LIST: "ADD_FILE_TO_RESULT_LIST",
   ADD_FOLDER_TO_RESULT_LIST: "ADD_FOLDER_TO_RESULT_LIST",
-  REFRESH_SEARCH_RESULTS: "REFRESH_SEARCH_RESULTS"
+  REFRESH_SEARCH_RESULTS: "REFRESH_SEARCH_RESULTS",
+  NAVIGATE_ADDRESS: "NAVIGATE_ADDRESS"
 }
 
 export function changeAddress(address) {
   return {
     type: Types.CHANGE_ADDRESS,
     payload: address
+  };
+}
+
+export function navigateAddress(toAddress) {
+  return {
+    type: Types.NAVIGATE_ADDRESS,
+    payload: toAddress
   };
 }
 
