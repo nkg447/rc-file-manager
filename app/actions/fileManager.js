@@ -1,39 +1,37 @@
 // @flow
 export const Types = {
-  SEARCH_STATE_TOGGLE:"SEARCH_STATE_TOGGLE",
-  SEARCH_MATCH: "SEARCH_MATCH",
-  SEARCHED_FILES_COMPONENT: "SEARCHED_FILES_COMPONENT",
-  CHANGE_ADDRESS: "CHANGE_ADDRESS",
-  ADD_FILE_TO_RESULT_LIST: "ADD_FILE_TO_RESULT_LIST",
-  ADD_FOLDER_TO_RESULT_LIST: "ADD_FOLDER_TO_RESULT_LIST",
-  REFRESH_SEARCH_RESULTS: "REFRESH_SEARCH_RESULTS",
-  NAVIGATE_ADDRESS: "NAVIGATE_ADDRESS"
-}
+  SEARCH_STATE_TOGGLE: 'SEARCH_STATE_TOGGLE',
+  SEARCH_MATCH: 'SEARCH_MATCH',
+  SEARCHED_FILES_COMPONENT: 'SEARCHED_FILES_COMPONENT',
+  CHANGE_ADDRESS: 'CHANGE_ADDRESS',
+  ADD_FILE_TO_RESULT_LIST: 'ADD_FILE_TO_RESULT_LIST',
+  ADD_FOLDER_TO_RESULT_LIST: 'ADD_FOLDER_TO_RESULT_LIST',
+  REFRESH_SEARCH_RESULTS: 'REFRESH_SEARCH_RESULTS',
+  NAVIGATE_ADDRESS: 'NAVIGATE_ADDRESS'
+};
 
-export function changeAddress(address) {
+export function changeAddress(address: String) {
   return {
     type: Types.CHANGE_ADDRESS,
     payload: address
   };
 }
 
-export function navigateAddress(toAddress) {
+export function navigateAddress(toAddress: String) {
   return {
     type: Types.NAVIGATE_ADDRESS,
     payload: toAddress
   };
 }
 
-export function changeSearchState(){
+export function changeSearchState() {
   return {
     type: Types.SEARCH_STATE_TOGGLE
-  }
+  };
 }
 
-export function searchComponentToggle(){
+export function searchComponentToggle() {
   return {
     type: Types.SEARCHED_FILES_COMPONENT
-  }
+  };
 }
-
-

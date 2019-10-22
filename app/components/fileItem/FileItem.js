@@ -12,18 +12,21 @@ const isImage = address => {
 };
 
 export default props => {
-  const { file, address, selected, ...otherProps } = props;
+  const { file, address, fileIconSize, selected, ...otherProps } = props;
   const isDirectory = file.isDirectory();
+  const iconStyle = {
+    height: fileIconSize
+  };
   const icon = isDirectory ? (
     <FOLDER_ICON
-      className={styles.icon}
+      style={iconStyle}
       color={selected ? Colors.selectedFileIcon : Colors.fileIcon}
     />
   ) : isImage(file.name) ? (
-    <img src={path.join(address, file.name)} className={styles.icon} />
+    <img src={path.join(address, file.name)} style={iconStyle} />
   ) : (
     <FILE_ICON
-      className={styles.icon}
+      style={iconStyle}
       color={selected ? Colors.selectedFileIcon : Colors.fileIcon}
     />
   );

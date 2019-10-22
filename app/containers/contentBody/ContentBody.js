@@ -36,7 +36,12 @@ export default class ContentBody extends Component {
   };
 
   updateState = () => {
-    this.setState({ ...this.props, selected: {}, showContextMenu: false });
+    if (
+      this.state.address !== this.props.address ||
+      this.state.fileIconSize !== this.props.fileIconSize
+    ) {
+      this.setState({ ...this.props, selected: {}, showContextMenu: false });
+    }
   };
 
   selectFile = fileIndex => {
@@ -62,10 +67,8 @@ export default class ContentBody extends Component {
   };
 
   render() {
-    const { files, address, selected } = this.state;
-    if (address !== this.props.address) {
-      this.updateState();
-    }
+    const { files, address, selected, fileIconSize } = this.state;
+    this.updateState();
     return (
       <>
         <div
@@ -81,6 +84,7 @@ export default class ContentBody extends Component {
               onClick={this.selectFile.bind(this, i)}
               selected={selected[i] ? true : false}
               onContextMenu={e => this.onContext(e, file)}
+              fileIconSize={fileIconSize}
             ></FileItem>
           ))}
         </div>
