@@ -10,10 +10,14 @@ import { changeAddress } from '../../actions/fileManager';
 
 const fs = require('fs');
 const _ = require('lodash');
+const MAX_FILE_ICON_SIZE = 100;
+const MIN_FILE_ICON_SIZE = 30;
 class Content extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      fileIconSize: 50
+    };
   }
   /**
    * Reads files and folders list on search result or
@@ -58,6 +62,10 @@ class Content extends Component {
     }
   };
 
+  fileIconSizeHandler = size => {
+    this.setState({ fileIconSize: size });
+  };
+
   render() {
     let files = this.readDir();
     let { address } = this.props.fileManagerState;
@@ -68,8 +76,13 @@ class Content extends Component {
           files={files}
           address={address}
           changeAddress={this.props.changeAddress}
+          fileIconSize={this.state.fileIconSize}
         />
-        <Footer></Footer>
+        <Footer
+          fileIconSizeHandler={this.fileIconSizeHandler}
+          fileIconSize={this.state.fileIconSize}
+          files={files}
+        ></Footer>
       </div>
     );
   }
