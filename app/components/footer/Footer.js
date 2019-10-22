@@ -17,7 +17,13 @@ export default props => {
   const onDragHandler = (e: React.DragEvent) => {
     if (e.clientX === 0) return;
     const dialOffset = document.getElementById('fontSizeDial').offsetLeft;
-    fileIconSizeHandler(fileIconSize + ((e.clientX - dialOffset) * 70) / 100);
+    const newFileIconSize =
+      fileIconSize + ((e.clientX - dialOffset) * 70) / 100;
+    if (
+      newFileIconSize >= MIN_FILE_ICON_SIZE &&
+      newFileIconSize <= MAX_FILE_ICON_SIZE
+    )
+      fileIconSizeHandler(newFileIconSize);
   };
   return (
     <div className={styles.container}>

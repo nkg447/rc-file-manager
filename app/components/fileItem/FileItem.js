@@ -17,6 +17,10 @@ export default props => {
   const iconStyle = {
     height: fileIconSize
   };
+  const containerStyle = {
+    height: fileIconSize+30,
+    width: fileIconSize+30
+  };
   const icon = isDirectory ? (
     <FOLDER_ICON
       style={iconStyle}
@@ -33,6 +37,7 @@ export default props => {
   return (
     <div
       className={selected ? styles.selectedContainer : styles.container}
+      style={containerStyle}
       {...otherProps}
     >
       {icon}
