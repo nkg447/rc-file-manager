@@ -7,6 +7,8 @@
 }
 
 :local(.navigate) {
+  width: 2rem;
+  font-size: 2rem;
   display: flex;
   justify-content: space-around;
 }
@@ -16,23 +18,20 @@
 }
 
 :local(.activeIcon) {
-  height: 2rem;
-  width: 2rem;
+  width: 100%;
   border: 1px solid;
   color: #74b1be;
 }
 
 :local(.activeIcon:hover) {
-  height: 2rem;
-  width: 2rem;
+  width: 100%;
   border: 1px solid;
   color: #2c2e3b;
   background-color: #74b1be;
 }
 
 :local(.icon) {
-  height: 2rem;
-  width: 2rem;
+  width: 100%;
   border: 1px solid;
   color: #2c2e3b;
   background-color: #74b1be;

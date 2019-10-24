@@ -2,6 +2,12 @@ import React from 'react';
 import styles from './SidebarTop.css';
 import { NEXT_ICON, PREV_ICON } from '../../assets';
 import Colors from '../../theme/Color';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faChevronRight,
+  faChevronLeft
+} from '@fortawesome/free-solid-svg-icons';
+
 export default props => {
   const { navigateAddress, currentStackIndex, navigationStack } = props;
   const canGo = to => {
@@ -16,14 +22,16 @@ export default props => {
     <div className={styles.container}>
       <div className={styles.logo}>Logo</div>
       <div className={styles.navigate}>
-        <PREV_ICON
+        <FontAwesomeIcon
           onClick={() => navigateOnClick('prev')}
           className={canGo('prev') ? styles.activeIcon : styles.icon}
-        ></PREV_ICON>
-        <NEXT_ICON
+          icon={faChevronLeft}
+        />
+        <FontAwesomeIcon
           onClick={() => navigateOnClick('next')}
           className={canGo('next') ? styles.activeIcon : styles.icon}
-        ></NEXT_ICON>
+          icon={faChevronRight}
+        />
       </div>
     </div>
   );
