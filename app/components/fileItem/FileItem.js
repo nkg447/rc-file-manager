@@ -1,12 +1,43 @@
 import React, { Component } from 'react';
 import styles from './FileItem.css';
 import { connect } from 'react-redux';
-import { FOLDER_ICON, FILE_ICON } from '../../assets';
 import Colors from '../../theme/Color';
 const mime = require('mime-types');
 const path = require('path');
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFolder, faFile } from '@fortawesome/free-solid-svg-icons';
+import {
+  faFolder,
+  faFile,
+  faFileAlt,
+  faFilePdf,
+  faFileCode,
+  faFileArchive,
+  faFileAudio,
+  faFileCsv,
+  faFileVideo
+} from '@fortawesome/free-solid-svg-icons';
+
+const programmingLanguages = [
+  'java',
+  'html',
+  'json',
+  'css',
+  'javascript',
+  'jsx'
+];
+const addressToIcon = (address: String) => {
+  const mimeType = String(mime.lookup(address));
+  if (programmingLanguages.filter(e => mimeType.indexOf(e) != -1).length != 0)
+    return faFileCode;
+  if (mimeType.startsWith('text')) return faFileAlt;
+  if (mimeType.startsWith('audio')) return faFileAudio;
+  if (mimeType.startsWith('video')) return faFileVideo;
+  if (mimeType.indexOf('pdf') != -1) return faFilePdf;
+  if (mimeType.indexOf('csv') != -1) return faFileCsv;
+  if (mimeType.indexOf('zip') != -1 || mimeType.indexOf('compressed') != -1)
+    return faFileArchive;
+  return faFile;
+};
 
 const isImage = address => {
   const mimeType = mime.lookup(address);
@@ -34,7 +65,7 @@ export default props => {
     <img src={path.join(address, file.name)} style={iconStyle} />
   ) : (
     <FontAwesomeIcon
-      icon={faFile}
+      icon={addressToIcon(file.name)}
       style={iconStyle}
       color={selected ? Colors.selectedFileIcon : Colors.fileIcon}
     />

@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './SidebarTop.css';
-import { NEXT_ICON, PREV_ICON } from '../../assets';
 import Colors from '../../theme/Color';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
