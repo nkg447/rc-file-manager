@@ -5,6 +5,8 @@ import { FOLDER_ICON, FILE_ICON } from '../../assets';
 import Colors from '../../theme/Color';
 const mime = require('mime-types');
 const path = require('path');
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFolder, faFile } from '@fortawesome/free-solid-svg-icons';
 
 const isImage = address => {
   const mimeType = mime.lookup(address);
@@ -15,21 +17,24 @@ export default props => {
   const { file, address, fileIconSize, selected, ...otherProps } = props;
   const isDirectory = file.isDirectory();
   const iconStyle = {
+    fontSize: fileIconSize,
     height: fileIconSize
   };
   const containerStyle = {
-    height: fileIconSize+30,
-    width: fileIconSize+30
+    height: fileIconSize + 30,
+    width: fileIconSize + 30
   };
   const icon = isDirectory ? (
-    <FOLDER_ICON
+    <FontAwesomeIcon
+      icon={faFolder}
       style={iconStyle}
       color={selected ? Colors.selectedFileIcon : Colors.fileIcon}
     />
   ) : isImage(file.name) ? (
     <img src={path.join(address, file.name)} style={iconStyle} />
   ) : (
-    <FILE_ICON
+    <FontAwesomeIcon
+      icon={faFile}
       style={iconStyle}
       color={selected ? Colors.selectedFileIcon : Colors.fileIcon}
     />
