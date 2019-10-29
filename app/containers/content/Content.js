@@ -39,16 +39,20 @@ class Content extends Component {
       };
     } else {
       // Current directory files & folders
-      const files = fs
-        .readdirSync(address, { withFileTypes: true })
-        .filter(file => !file.name.startsWith('.'))
-        .sort((f1, f2) => {
-          if (f1.isDirectory() == f2.isDirectory()) {
-            return f1.name.localeCompare(f2.name);
-          }
-          return f1.isDirectory() ? -1 : 1;
-        });
-      return files;
+      try {
+        const files = fs
+          .readdirSync(address, { withFileTypes: true })
+          .filter(file => !file.name.startsWith('.'))
+          .sort((f1, f2) => {
+            if (f1.isDirectory() == f2.isDirectory()) {
+              return f1.name.localeCompare(f2.name);
+            }
+            return f1.isDirectory() ? -1 : 1;
+          });
+        return files;
+      } catch (err) {
+        return [];
+      }
     }
   };
 
@@ -71,7 +75,11 @@ class Content extends Component {
     let { address } = this.props.fileManagerState;
     return (
       <div className={`${styles.container}`}>
-        <Header searchValueChange={this.searchValueChange}></Header>
+        <Header
+          address={address}
+          searchValueChange={this.searchValueChange}
+          changeAddress={this.props.changeAddress}
+        ></Header>
         <ContentBody
           files={files}
           address={address}
