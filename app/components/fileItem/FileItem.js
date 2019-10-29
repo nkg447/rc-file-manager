@@ -52,7 +52,7 @@ export default props => {
     height: fileIconSize
   };
   const containerStyle = {
-    height: fileIconSize + 30,
+    height: fileIconSize + 35,
     width: fileIconSize + 30
   };
   const icon = isDirectory ? (
