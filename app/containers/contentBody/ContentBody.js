@@ -66,6 +66,51 @@ export default class ContentBody extends Component {
     });
   };
 
+  changeSelectedFileIndexBy = n => {
+    this.setState(prevState => {
+      let selectedFileIndex = -1;
+      Object.keys(prevState.selected)
+        .filter(key => prevState.selected[key])
+        .forEach(key => (selectedFileIndex = +key));
+      selectedFileIndex = (selectedFileIndex + n) % prevState.files.length;
+      if (selectedFileIndex < 0) selectedFileIndex += prevState.files.length;
+      return { selected: { [selectedFileIndex]: true } };
+    });
+  };
+
+  keyPressHandler = e => {
+    switch (e.key) {
+      case 'ArrowRight':
+        this.changeSelectedFileIndexBy(1);
+        break;
+
+      case 'ArrowLeft':
+        this.changeSelectedFileIndexBy(-1);
+        break;
+
+      case 'ArrowUp':
+      case 'ArrowDown':
+        const container = document.getElementById('mainContent');
+        if (container.children.length > 1) {
+          const c1Bounds = container.children[0].getBoundingClientRect();
+          const c2Bounds = container.children[1].getBoundingClientRect();
+          if (c1Bounds.top === c2Bounds.top) {
+            const width = c2Bounds.left - c1Bounds.left;
+            const noOfItemsInARow = Math.floor(container.offsetWidth / width);
+            if (e.key === 'ArrowUp')
+              this.changeSelectedFileIndexBy(-noOfItemsInARow);
+            else this.changeSelectedFileIndexBy(noOfItemsInARow);
+          } else {
+            if (e.key === 'ArrowUp') this.changeSelectedFileIndexBy(-1);
+            else this.changeSelectedFileIndexBy(1);
+          }
+        }
+        break;
+      default:
+        break;
+    }
+  };
+
   render() {
     const { files, address, selected, fileIconSize } = this.state;
     this.updateState();
@@ -74,6 +119,9 @@ export default class ContentBody extends Component {
         <div
           onClick={() => this.setState({ showContextMenu: false })}
           className={styles.container}
+          onKeyDown={this.keyPressHandler}
+          tabIndex="1"
+          id="mainContent"
         >
           {files.map((file, i) => (
             <FileItem
