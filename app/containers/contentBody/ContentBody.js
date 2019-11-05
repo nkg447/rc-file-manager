@@ -78,6 +78,14 @@ export default class ContentBody extends Component {
     });
   };
 
+  moveSelectedFilesToTrash = () => {
+    Object.keys(this.state.selected)
+      .filter(key => this.state.selected[key])
+      .forEach(key => {
+        this.onDeleteHandler(this.state.files[key]);
+      });
+  };
+
   keyPressHandler = e => {
     switch (e.key) {
       case 'ArrowRight':
@@ -106,7 +114,13 @@ export default class ContentBody extends Component {
           }
         }
         break;
+
+      case 'Delete':
+        this.moveSelectedFilesToTrash();
+        break;
+
       default:
+        console.log(e.key, 'key pressed');
         break;
     }
   };

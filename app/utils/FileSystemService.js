@@ -3,6 +3,7 @@ const fs = require('fs');
 const os = require('os');
 const HOME_DIR = os.homedir();
 const USERNAME = os.userInfo().username;
+const shell = require('electron').shell;
 
 const getMountedDevices = () => {
   // mounted devices
@@ -37,8 +38,9 @@ const getHomeDirectories = () => {
   return availableDirs;
 };
 
-const deleteFile = (path) => {
-  fs.unlinkSync(path)
+const deleteFile = path => {
+  // fs.unlinkSync(path)
+  shell.moveItemToTrash(path);
 };
 
 export default {
