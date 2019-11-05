@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styles from './ListItem.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEject } from '@fortawesome/free-solid-svg-icons';
 
 export default props => {
   const { item, active, text, ...otherProps } = props;
@@ -13,8 +12,8 @@ export default props => {
       {...otherProps}
     >
       <p>{text}</p>
-      {item.external ? (
-        <FontAwesomeIcon icon={faEject} className={styles.icon} />
+      {item.icon ? (
+        <FontAwesomeIcon icon={item.icon} className={styles.icon} />
       ) : null}
     </li>
   );
