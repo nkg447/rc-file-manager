@@ -60,9 +60,12 @@ const deleteFile = (path, permanent = false) => {
   else fs.unlinkSync(path);
 };
 
+const isTrashDir = address => TRASH_DIR === address;
+
 export default {
   getMountedDevices,
   getHomeDirectories,
   deleteFile,
-  TRASH_DIR
+  TRASH_DIR,
+  isTrashDir
 };
