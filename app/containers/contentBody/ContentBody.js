@@ -28,7 +28,10 @@ export default class ContentBody extends Component {
 
   onDeleteHandler = file => {
     const filePath = path.join(this.props.address, file.name);
-    FileSystemService.deleteFile(filePath);
+    FileSystemService.deleteFile(
+      filePath,
+      FileSystemService.TRASH_DIR === this.props.address // if true then permanentDelete, else moveToTrash
+    );
     this.setState(prevState => ({
       files: prevState.files.filter(f => f.name !== file.name),
       showContextMenu: false
