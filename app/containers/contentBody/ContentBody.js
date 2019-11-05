@@ -131,7 +131,9 @@ export default class ContentBody extends Component {
     return (
       <>
         <div
-          onClick={() => this.setState({ showContextMenu: false })}
+          onClick={() =>
+            this.setState({ showContextMenu: false, selected: {} })
+          }
           className={styles.container}
           onKeyDown={this.keyPressHandler}
           tabIndex="1"
@@ -143,7 +145,10 @@ export default class ContentBody extends Component {
               file={file}
               address={address}
               onDoubleClick={this.onDoubleClickHandler.bind(this, file)}
-              onClick={this.selectFile.bind(this, i)}
+              onClick={e => {
+                e.stopPropagation(); // to not execute the onClick of outer div
+                this.selectFile(i);
+              }}
               selected={selected[i] ? true : false}
               onContextMenu={e => this.onContext(e, file)}
               fileIconSize={fileIconSize}
