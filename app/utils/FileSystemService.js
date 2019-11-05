@@ -29,7 +29,8 @@ const getHomeDirectories = () => {
     Downloads: { path: path.join(HOME_DIR, 'Downloads') },
     Music: { path: path.join(HOME_DIR, 'Music') },
     Pictures: { path: path.join(HOME_DIR, 'Pictures') },
-    Videos: { path: path.join(HOME_DIR, 'Videos') }
+    Videos: { path: path.join(HOME_DIR, 'Videos') },
+    Trash: { path: path.join(HOME_DIR, '.local/share/Trash/files') }
   };
   const availableDirs = {};
   Object.keys(dirs)
@@ -38,9 +39,9 @@ const getHomeDirectories = () => {
   return availableDirs;
 };
 
-const deleteFile = path => {
-  // fs.unlinkSync(path)
-  shell.moveItemToTrash(path);
+const deleteFile = (path, permanent = false) => {
+  if (!permanent) shell.moveItemToTrash(path);
+  else fs.unlinkSync(path);
 };
 
 export default {
