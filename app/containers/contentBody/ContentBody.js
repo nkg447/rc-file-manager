@@ -69,6 +69,14 @@ export default class ContentBody extends Component {
     });
   };
 
+  openSelectedFile = () => {
+    const selectedFiles = Object.keys(this.state.selected).filter(
+      key => this.state.selected[key]
+    );
+    if (selectedFiles.length > 0)
+      this.onDoubleClickHandler(this.state.files[+selectedFiles[0]]);
+  };
+
   changeSelectedFileIndexBy = n => {
     this.setState(prevState => {
       let selectedFileIndex = -1;
@@ -116,6 +124,10 @@ export default class ContentBody extends Component {
             else this.changeSelectedFileIndexBy(1);
           }
         }
+        break;
+
+      case 'Enter':
+        this.openSelectedFile();
         break;
 
       case 'Delete':
