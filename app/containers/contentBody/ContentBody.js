@@ -130,6 +130,10 @@ export default class ContentBody extends Component {
         this.openSelectedFile();
         break;
 
+      case 'Backspace':
+        this.props.navigateAddress('prev');
+        break;
+
       case 'Delete':
         this.moveSelectedFilesToTrash();
         break;

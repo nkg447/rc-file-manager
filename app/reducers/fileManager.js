@@ -31,9 +31,12 @@ export default function fileManager(state = initialState, action) {
 
     case Types.NAVIGATE_ADDRESS: {
       const newState = cloneDeep(state);
-      if (action.payload === 'prev') {
+      if (action.payload === 'prev' && newState.currentStackIndex > 0) {
         newState.currentStackIndex--;
-      } else {
+      } else if (
+        action.payload === 'next' &&
+        newState.navigationStack.length > newState.currentStackIndex + 1
+      ) {
         newState.currentStackIndex++;
       }
       newState.address = newState.navigationStack[newState.currentStackIndex];
