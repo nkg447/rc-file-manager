@@ -10,10 +10,13 @@
  *
  * @flow
  */
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
+const fs = require('fs');
+const path = require('path');
+let searchCounter = 0;
 
 export default class AppUpdater {
   constructor() {
@@ -99,4 +102,38 @@ app.on('ready', async () => {
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
   new AppUpdater();
+});
+
+ipcMain.on('search-file', (event, arg) => {
+  try {
+    searchCounter++;
+    console.log('searching', arg, searchCounter);
+
+    const { searchAt, searchFor } = arg;
+    if (searchFor.length === 0) return;
+    const tempCounter = searchCounter;
+    let queue = [searchAt];
+
+    while (queue.length !== 0) {
+      const _path = queue.shift();
+      const files = fs.readdirSync(_path, { withFileTypes: true });
+      files
+        .filter(file => !file.name.startsWith('.'))
+        .forEach(file => {
+          console.log(searchCounter, tempCounter);
+
+          if (searchCounter !== tempCounter) {
+            queue = undefined;
+            ipcMain.emit('search-reply', 'null');
+            console.log('stopping search');
+          }
+          if (file.name.toLowerCase().indexOf(searchFor) != -1) {
+            ipcMain.emit('search-reply', file);
+          }
+          if (file.isDirectory()) {
+            queue.push(path.join(_path, file.name));
+          }
+        });
+    }
+  } catch (err) {}
 });

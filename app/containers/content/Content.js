@@ -9,15 +9,33 @@ import searchFilesWithName from '../../utils/searchFilesWithName';
 import { changeAddress, navigateAddress } from '../../actions/fileManager';
 
 const fs = require('fs');
+const { ipcRenderer } = require('electron');
 const _ = require('lodash');
 const MAX_FILE_ICON_SIZE = 100;
 const MIN_FILE_ICON_SIZE = 30;
 class Content extends Component {
+  count = 0;
   constructor(props) {
     super(props);
     this.state = {
-      fileIconSize: 50
+      fileIconSize: 50,
+      searching: false,
+      files: []
     };
+    ipcRenderer.on('search-reply', (event, arg) => {
+      console.log(arg);
+      
+      if (arg === 'null') {
+        this.setState({ files: [] });
+      } else {
+        this.setState(prevState => {
+          prevState.files.push(arg);
+          return {
+            files: prevState.files
+          };
+        });
+      }
+    });
   }
   /**
    * Reads files and folders list on search result or
@@ -58,12 +76,15 @@ class Content extends Component {
 
   // TODO: Create action in store and call the search function here with debounce
   searchValueChange = searchFor => {
-    if (searchFor.trim() !== '') {
-      // _.debounce(input => {
-      //   this.props.fetchClient Suggestions(input);
-      // }, 500);
-      let searchResult = searchFilesWithName(searchFor);
-    }
+    searchFor = searchFor.trim();
+    if (!this.state.searching && searchFor.length !== 0)
+      this.setState({ searching: true });
+    else if (this.state.searching && searchFor.length === 0)
+      this.setState({ searching: false });
+    ipcRenderer.send('search-file', {
+      searchFor,
+      searchAt: this.props.fileManagerState.address
+    });
   };
 
   fileIconSizeHandler = size => {
@@ -71,7 +92,7 @@ class Content extends Component {
   };
 
   render() {
-    let files = this.readDir();
+    let files = this.state.searching ? this.state.files : this.readDir();
     let { address } = this.props.fileManagerState;
     return (
       <div className={`${styles.container}`}>
