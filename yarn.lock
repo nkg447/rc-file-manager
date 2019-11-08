@@ -10750,6 +10750,16 @@ react-router@5.0.1, react-router@^5.0.0:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
+react-selectable-fast@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-selectable-fast/-/react-selectable-fast-3.0.0.tgz#24bd1bd10a840e852d3083505c1dddfa9bf5a374"
+  integrity sha512-RYUqLoWjVhYL+chR1ScaP1mR87+lcvXF+U+iyzI+c6c3o2GwSb71meDzSBzuG6xnU9Ehq5+AlgA+epFTypmXpw==
+
+react-selectable@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/react-selectable/-/react-selectable-2.0.2.tgz#e6cceebefb00c6c2512c289f8bc4f76269219ff8"
+  integrity sha512-ALRYd33UOZBlDU/1rez4WwKo7mf2yBngy0pXg6LoE9Df5oGjkyfQ774LbF+f5prIHC5lzPqPunOUR673cwSHkg==
+
 react-test-renderer@^16.0.0-0, react-test-renderer@^16.8.6:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.8.6.tgz#188d8029b8c39c786f998aa3efd3ffe7642d5ba1"
