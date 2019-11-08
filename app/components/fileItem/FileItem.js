@@ -5,6 +5,7 @@ import Colors from '../../theme/Color';
 const mime = require('mime-types');
 const path = require('path');
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { createSelectable } from 'react-selectable-fast';
 import {
   faFolder,
   faFile,
@@ -44,8 +45,16 @@ const isImage = address => {
   return mimeType && mimeType.startsWith('image');
 };
 
-export default props => {
-  const { file, address, fileIconSize, selected, ...otherProps } = props;
+export default createSelectable(props => {
+  const {
+    file,
+    address,
+    fileIconSize,
+    selected,
+    selectableRef,
+    selecting,
+    ...otherProps
+  } = props;
   const isDirectory = file.isDirectory();
   const iconStyle = {
     fontSize: fileIconSize,
@@ -72,6 +81,7 @@ export default props => {
   );
   return (
     <div
+      ref={selectableRef}
       className={selected ? styles.selectedContainer : styles.container}
       style={containerStyle}
       {...otherProps}
@@ -82,4 +92,4 @@ export default props => {
       </p>
     </div>
   );
-};
+});

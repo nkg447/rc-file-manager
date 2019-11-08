@@ -4,6 +4,7 @@ import FileItem from '../../components/fileItem/FileItem';
 import { shell } from 'electron';
 import ContextMenu from '../../components/contextMenu/contextMenu';
 import FileSystemService from '../../utils/FileSystemService';
+import { SelectableGroup } from 'react-selectable-fast';
 
 const path = require('path');
 export default class ContentBody extends Component {
@@ -11,7 +12,7 @@ export default class ContentBody extends Component {
     super(props);
     this.state = {
       ...props,
-      selected: {},
+      selectedFiles: [],
       showContextMenu: false,
       contextMenuBounds: {}
     };
@@ -43,19 +44,16 @@ export default class ContentBody extends Component {
       this.state.address !== this.props.address ||
       this.state.fileIconSize !== this.props.fileIconSize
     ) {
-      this.setState({ ...this.props, selected: {}, showContextMenu: false });
+      this.setState({
+        ...this.props,
+        selectedFiles: [],
+        showContextMenu: false
+      });
     }
-  };
 
-  selectFile = fileIndex => {
-    this.setState(prevState => ({
-      selected: {
-        // uncomment the following to make it multi-select
-        // ...prevState.selected,
-        [fileIndex]: prevState.selected[fileIndex] ? false : true
-      },
-      showContextMenu: false
-    }));
+    try {
+      document.getElementById('mainContent').focus();
+    } catch (err) {}
   };
 
   onContext = (e: React.MouseEvent, file) => {
@@ -70,31 +68,25 @@ export default class ContentBody extends Component {
   };
 
   openSelectedFile = () => {
-    const selectedFiles = Object.keys(this.state.selected).filter(
-      key => this.state.selected[key]
-    );
-    if (selectedFiles.length > 0)
-      this.onDoubleClickHandler(this.state.files[+selectedFiles[0]]);
+    if (this.state.selectedFiles.length > 0)
+      this.onDoubleClickHandler(this.state.selectedFiles[0]);
   };
 
   changeSelectedFileIndexBy = n => {
     this.setState(prevState => {
       let selectedFileIndex = -1;
-      Object.keys(prevState.selected)
-        .filter(key => prevState.selected[key])
-        .forEach(key => (selectedFileIndex = +key));
+      selectedFileIndex = prevState.files.indexOf(prevState.selectedFiles[0]);
       selectedFileIndex = (selectedFileIndex + n) % prevState.files.length;
       if (selectedFileIndex < 0) selectedFileIndex += prevState.files.length;
-      return { selected: { [selectedFileIndex]: true } };
+      return { selectedFiles: [prevState.files[selectedFileIndex]] };
     });
   };
 
   moveSelectedFilesToTrash = () => {
-    Object.keys(this.state.selected)
-      .filter(key => this.state.selected[key])
-      .forEach(key => {
-        this.onDeleteHandler(this.state.files[key]);
-      });
+    this.state.selectedFiles.forEach(file => {
+      this.onDeleteHandler(file);
+    });
+    this.setState({ selectedFiles: [] });
   };
 
   keyPressHandler = e => {
@@ -144,36 +136,36 @@ export default class ContentBody extends Component {
     }
   };
 
+  handleSelection = selectedFiles => {
+    selectedFiles = selectedFiles.map(selectedFile => selectedFile.props.file);
+    this.setState({ selectedFiles });
+  };
+
   render() {
-    const { files, address, selected, fileIconSize } = this.state;
+    const { files, address, selectedFiles, fileIconSize } = this.state;
     this.updateState();
     return (
       <>
-        <div
-          onClick={() =>
-            this.setState({ showContextMenu: false, selected: {} })
-          }
-          className={styles.container}
-          onKeyDown={this.keyPressHandler}
-          tabIndex="1"
-          id="mainContent"
-        >
-          {files.map((file, i) => (
-            <FileItem
-              key={i}
-              file={file}
-              address={address}
-              onDoubleClick={this.onDoubleClickHandler.bind(this, file)}
-              onClick={e => {
-                e.stopPropagation(); // to not execute the onClick of outer div
-                this.selectFile(i);
-              }}
-              selected={selected[i] ? true : false}
-              onContextMenu={e => this.onContext(e, file)}
-              fileIconSize={fileIconSize}
-            ></FileItem>
-          ))}
-        </div>
+        <SelectableGroup onSelectionFinish={this.handleSelection}>
+          <div
+            className={styles.container}
+            onKeyDown={this.keyPressHandler}
+            tabIndex="-1"
+            id="mainContent"
+          >
+            {files.map((file, i) => (
+              <FileItem
+                key={i}
+                file={file}
+                address={address}
+                onDoubleClick={this.onDoubleClickHandler.bind(this, file)}
+                onContextMenu={e => this.onContext(e, file)}
+                fileIconSize={fileIconSize}
+                selected={selectedFiles.includes(file)}
+              ></FileItem>
+            ))}
+          </div>
+        </SelectableGroup>
         {this.state.showContextMenu ? (
           <ContextMenu
             onOpen={this.onDoubleClickHandler.bind(
