@@ -16,9 +16,9 @@ export default class ContentBody extends Component {
       selectedFiles: [],
       showContextMenu: false,
       contextMenuBounds: {},
-      isMouseDown: false,
       selectingRectBounds: {}
     };
+    this.isMouseDown = false;
   }
 
   onDoubleClickHandler = file => {
