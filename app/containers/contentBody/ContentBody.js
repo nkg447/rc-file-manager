@@ -5,6 +5,7 @@ import { shell } from 'electron';
 import ContextMenu from '../../components/contextMenu/contextMenu';
 import FileSystemService from '../../utils/FileSystemService';
 import { SelectableGroup } from 'react-selectable-fast';
+import SelectingRect from '../../components/selectingRect/selectingRect';
 
 const path = require('path');
 export default class ContentBody extends Component {
@@ -14,7 +15,9 @@ export default class ContentBody extends Component {
       ...props,
       selectedFiles: [],
       showContextMenu: false,
-      contextMenuBounds: {}
+      contextMenuBounds: {},
+      isMouseDown: false,
+      selectingRectBounds: {}
     };
   }
 
@@ -138,7 +141,23 @@ export default class ContentBody extends Component {
 
   handleSelection = selectedFiles => {
     selectedFiles = selectedFiles.map(selectedFile => selectedFile.props.file);
-    this.setState({ selectedFiles });
+    this.isMouseDown = false;
+    this.setState({ selectedFiles, selectingRectBounds: {} });
+  };
+
+  mouseMoveHandler = (e: React.MouseEvent) => {
+    e.persist();
+    if (this.isMouseDown) {
+      this.setState(prevState => {
+        return {
+          selectingRectBounds: {
+            ...prevState.selectingRectBounds,
+            x2: e.clientX,
+            y2: e.clientY
+          }
+        };
+      });
+    }
   };
 
   render() {
@@ -146,12 +165,23 @@ export default class ContentBody extends Component {
     this.updateState();
     return (
       <>
-        <SelectableGroup onSelectionFinish={this.handleSelection}>
+        <SelectingRect {...this.state.selectingRectBounds}></SelectingRect>
+        <SelectableGroup onSelectionFinish={this.handleSelection} resetOnStart>
           <div
             className={styles.container}
             onKeyDown={this.keyPressHandler}
             tabIndex="-1"
             id="mainContent"
+            onMouseDownCapture={e => {
+              this.isMouseDown = true;
+              this.setState({
+                selectingRectBounds: {
+                  x1: e.clientX,
+                  y1: e.clientY
+                }
+              });
+            }}
+            onMouseMoveCapture={this.mouseMoveHandler}
           >
             {files.map((file, i) => (
               <FileItem
