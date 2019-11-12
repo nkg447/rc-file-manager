@@ -19,7 +19,7 @@ export default props => {
   };
   return (
     <div className={styles.container}>
-      <div className={styles.logo}>Logo</div>
+      <div className={styles.logo}>R C</div>
       <div className={styles.navigate}>
         <FontAwesomeIcon
           onClick={() => navigateOnClick('prev')}
