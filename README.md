@@ -3,6 +3,10 @@
 
 An electron based file manager.
 
+## Screenshots
+![screenshot 1](https://github.com/nkg447/rc-file-manager/raw/develop/screenshots/s1.png)<br>
+![screenshot 2](https://github.com/nkg447/rc-file-manager/raw/develop/screenshots/s2.png)
+
 ## Getting Started
 
 Follow the following steps to start using the following commands -

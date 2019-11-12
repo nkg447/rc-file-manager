@@ -1,9 +1,16 @@
 import { changeAddress, Types } from '../actions/fileManager';
 import cloneDeep from 'lodash/cloneDeep';
 import os from 'os';
+const path = require('path');
+
+function getPathFromArgs() {
+  const args = require('electron').remote.process.argv;
+  const _path = args.length > 1 ? args[args.length - 1] : os.homedir();
+  return _path.startsWith('.') ? path.join(process.cwd(), _path) : _path;
+}
 
 const initialState = {
-  address: os.homedir(),
+  address: getPathFromArgs(),
   home: os.homedir(),
   navigationStack: [os.homedir()],
   currentStackIndex: 0,
