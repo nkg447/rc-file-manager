@@ -58,7 +58,8 @@ export default createSelectable(props => {
   const isDirectory = file.isDirectory();
   const iconStyle = {
     fontSize: fileIconSize,
-    height: fileIconSize
+    maxHeight: fileIconSize,
+    maxWidth: fileIconSize
   };
   const containerStyle = {
     height: fileIconSize + 35,
