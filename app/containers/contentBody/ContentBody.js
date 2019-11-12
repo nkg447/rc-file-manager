@@ -201,10 +201,11 @@ export default class ContentBody extends Component {
               this,
               this.state.contextMenuBounds.file
             )}
-            onDelete={this.onDeleteHandler.bind(
-              this,
-              this.state.contextMenuBounds.file
-            )}
+            onDelete={() => {
+              if (this.state.selectedFiles.length > 0)
+                this.moveSelectedFilesToTrash();
+              else this.onDeleteHandler(this.state.contextMenuBounds.file);
+            }}
             bounds={this.state.contextMenuBounds}
             isTrashDir={FileSystemService.isTrashDir(address)}
           ></ContextMenu>
