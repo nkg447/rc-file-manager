@@ -1,0 +1,27 @@
+:local(.listItem) {
+  display: flex;
+  justify-content: space-between;
+  padding: 1em;
+  text-align: center;
+  color: inherit;
+  cursor: pointer;
+}
+
+:local(.listItem:hover) {
+  background-color: #74b1be;
+  color: #2c2e3b;
+}
+
+:local(.activeListItem) {
+  display: flex;
+  justify-content: space-between;
+  padding: 1em;
+  text-align: center;
+  cursor: pointer;
+  background-color: #74b1be;
+  color: #2c2e3b !important;
+}
+
+:local(.icon) {
+  font-size: 18px;
+}

@@ -1,0 +1,38 @@
+:local(.container) {
+  display: flex;
+  margin: 0.5rem;
+  height: 3rem;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+:local(.navigate) {
+  width: 2rem;
+  font-size: 2rem;
+  display: flex;
+  justify-content: space-around;
+}
+
+:local(.logo) {
+  font-size: x-large;
+}
+
+:local(.activeIcon) {
+  width: 100%;
+  border: 1px solid;
+  color: #74b1be;
+}
+
+:local(.activeIcon:hover) {
+  width: 100%;
+  border: 1px solid;
+  color: #2c2e3b;
+  background-color: #74b1be;
+}
+
+:local(.icon) {
+  width: 100%;
+  border: 1px solid;
+  color: #2c2e3b;
+  background-color: #74b1be;
+}
