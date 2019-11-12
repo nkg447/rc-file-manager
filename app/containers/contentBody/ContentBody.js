@@ -191,7 +191,6 @@ export default class ContentBody extends Component {
                 onDoubleClick={this.onDoubleClickHandler.bind(this, file)}
                 onContextMenu={e => this.onContext(e, file)}
                 fileIconSize={fileIconSize}
-                selected={selectedFiles.includes(file)}
               ></FileItem>
             ))}
           </div>

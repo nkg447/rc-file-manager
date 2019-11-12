@@ -50,9 +50,9 @@ export default createSelectable(props => {
     file,
     address,
     fileIconSize,
-    selected,
+    isSelected,
+    isSelecting,
     selectableRef,
-    selecting,
     ...otherProps
   } = props;
   const isDirectory = file.isDirectory();
@@ -64,25 +64,24 @@ export default createSelectable(props => {
     height: fileIconSize + 35,
     width: fileIconSize + 30
   };
-  const icon = isDirectory ? (
-    <FontAwesomeIcon
-      icon={faFolder}
-      style={iconStyle}
-      color={selected ? Colors.selectedFileIcon : Colors.fileIcon}
-    />
-  ) : isImage(file.name) ? (
+  const icon = isImage(file.name) ? (
     <img src={path.join(address, file.name)} style={iconStyle} />
   ) : (
     <FontAwesomeIcon
-      icon={addressToIcon(file.name)}
+      icon={isDirectory ? faFolder : addressToIcon(file.name)}
       style={iconStyle}
-      color={selected ? Colors.selectedFileIcon : Colors.fileIcon}
+      color={
+        isSelected || isSelecting ? Colors.selectedFileIcon : Colors.fileIcon
+      }
     />
   );
+
   return (
     <div
       ref={selectableRef}
-      className={selected ? styles.selectedContainer : styles.container}
+      className={
+        isSelected || isSelecting ? styles.selectedContainer : styles.container
+      }
       style={containerStyle}
       {...otherProps}
     >
