@@ -53,6 +53,7 @@ export default createSelectable(props => {
     isSelected,
     isSelecting,
     selectableRef,
+    selected,
     ...otherProps
   } = props;
   const isDirectory = file.isDirectory();
@@ -72,7 +73,7 @@ export default createSelectable(props => {
       icon={isDirectory ? faFolder : addressToIcon(file.name)}
       style={iconStyle}
       color={
-        isSelected || isSelecting ? Colors.selectedFileIcon : Colors.fileIcon
+        selected || isSelecting ? Colors.selectedFileIcon : Colors.fileIcon
       }
     />
   );
@@ -81,7 +82,7 @@ export default createSelectable(props => {
     <div
       ref={selectableRef}
       className={
-        isSelected || isSelecting ? styles.selectedContainer : styles.container
+        selected || isSelecting ? styles.selectedContainer : styles.container
       }
       style={containerStyle}
       {...otherProps}
