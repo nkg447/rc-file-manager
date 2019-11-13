@@ -9,6 +9,7 @@ export default props => {
     onCopy,
     onCut,
     onPaste,
+    onRefresh,
     isTrashDir,
     ...otherProps
   } = props;
@@ -29,7 +30,7 @@ export default props => {
         </>
       ) : (
         <>
-          <ContextMenuItem>New Folder</ContextMenuItem>
+          <ContextMenuItem onClick={onRefresh}>Refresh</ContextMenuItem>
           <ContextMenuItem onClick={onPaste}>Paste</ContextMenuItem>
         </>
       )}

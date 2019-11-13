@@ -79,9 +79,17 @@ class Content extends Component {
     this.setState({ fileIconSize: size });
   };
 
+  refresh = () => {
+    this.setState({ updateFiles: true });
+  };
+
   render() {
-    const files = this.readDir();
     const { address } = this.props.fileManagerState;
+    let files = this.state.files;
+    if (this.state.updateFiles || this.state.address !== address) {
+      files = this.readDir();
+      this.setState({ updateFiles: false, files, address });
+    }
     return (
       <div className={`${styles.container}`}>
         <Header
@@ -97,6 +105,7 @@ class Content extends Component {
           setFilesToCopy={this.props.setFilesToCopy}
           setFilesToCut={this.props.setFilesToCut}
           fileIconSize={this.state.fileIconSize}
+          refresh={this.refresh}
         />
         <Footer
           fileIconSizeHandler={this.fileIconSizeHandler}
