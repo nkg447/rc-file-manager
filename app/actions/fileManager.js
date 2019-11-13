@@ -7,7 +7,9 @@ export const Types = {
   ADD_FILE_TO_RESULT_LIST: 'ADD_FILE_TO_RESULT_LIST',
   ADD_FOLDER_TO_RESULT_LIST: 'ADD_FOLDER_TO_RESULT_LIST',
   REFRESH_SEARCH_RESULTS: 'REFRESH_SEARCH_RESULTS',
-  NAVIGATE_ADDRESS: 'NAVIGATE_ADDRESS'
+  NAVIGATE_ADDRESS: 'NAVIGATE_ADDRESS',
+  FILES_TO_COPY: 'FILES_TO_COPY',
+  FILES_TO_CUT: 'FILES_TO_CUT'
 };
 
 export function changeAddress(address: String) {
@@ -21,6 +23,20 @@ export function navigateAddress(toAddress: String) {
   return {
     type: Types.NAVIGATE_ADDRESS,
     payload: toAddress
+  };
+}
+
+export function filesToCopy(files: String[]) {
+  return {
+    type: Types.FILES_TO_COPY,
+    payload: files
+  };
+}
+
+export function filesToCut(files: String[]) {
+  return {
+    type: Types.FILES_TO_CUT,
+    payload: files
   };
 }
 

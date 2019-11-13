@@ -1,6 +1,7 @@
-import { changeAddress, Types } from '../actions/fileManager';
 import cloneDeep from 'lodash/cloneDeep';
 import os from 'os';
+import { changeAddress, Types } from '../actions/fileManager';
+
 const path = require('path');
 
 function getPathFromArgs() {
@@ -19,7 +20,9 @@ const initialState = {
     folders: [],
     files: []
   },
-  searchComponent: false
+  searchComponent: false,
+  filesToCopy: [],
+  filesToCut: []
 };
 
 export default function fileManager(state = initialState, action) {
@@ -82,6 +85,20 @@ export default function fileManager(state = initialState, action) {
         files: [],
         folders: []
       };
+      return newState;
+    }
+
+    case Types.FILES_TO_COPY: {
+      const newState = cloneDeep(state);
+      newState.filesToCopy = action.payload;
+      newState.filesToCut = [];
+      return newState;
+    }
+
+    case Types.FILES_TO_CUT: {
+      const newState = cloneDeep(state);
+      newState.filesToCopy = [];
+      newState.filesToCut = action.payload;
       return newState;
     }
 

@@ -1,10 +1,3 @@
-const path = require('path');
-const fs = require('fs');
-const os = require('os');
-const HOME_DIR = os.homedir();
-const USERNAME = os.userInfo().username;
-const TRASH_DIR = path.join(HOME_DIR, '.local/share/Trash/files');
-const shell = require('electron').shell;
 import {
   faEject,
   faHome,
@@ -16,6 +9,17 @@ import {
   faTrash,
   faFile
 } from '@fortawesome/free-solid-svg-icons';
+
+const path = require('path');
+// const fs = require('fs');
+const fs = require('fs-extra');
+const rimraf = require('rimraf');
+const os = require('os');
+
+const HOME_DIR = os.homedir();
+const USERNAME = os.userInfo().username;
+const TRASH_DIR = path.join(HOME_DIR, '.local/share/Trash/files');
+const { shell } = require('electron');
 
 const getMountedDevices = () => {
   // mounted devices
@@ -57,7 +61,26 @@ const getHomeDirectories = () => {
 
 const deleteFile = (path, permanent = false) => {
   if (!permanent) shell.moveItemToTrash(path);
-  else fs.unlinkSync(path);
+  else
+    rimraf(path, err => {
+      console.log(`${path} deleted`);
+    });
+};
+
+const copyFile = (sourcePath, destinationPath, cb = () => {}) => {
+  fs.copy(sourcePath, destinationPath, err => {
+    if (err) throw err;
+    console.log(`${sourcePath} was copied to ${destinationPath}`);
+    cb();
+  });
+};
+
+const moveFile = (sourcePath, destinationPath, cb = () => {}) => {
+  fs.move(sourcePath, destinationPath, err => {
+    if (err) throw err;
+    console.log(`${sourcePath} was moved to ${destinationPath}`);
+    cb();
+  });
 };
 
 const isTrashDir = address => TRASH_DIR === address;
@@ -67,5 +90,7 @@ export default {
   getHomeDirectories,
   deleteFile,
   TRASH_DIR,
-  isTrashDir
+  isTrashDir,
+  copyFile,
+  moveFile
 };

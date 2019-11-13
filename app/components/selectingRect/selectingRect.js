@@ -13,12 +13,13 @@ export default props => {
           ...styles.container,
           top: y,
           left: x,
-          height: height,
-          width: width
+          height,
+          width
         }}
       ></div>
     );
-  } else return null;
+  }
+  return null;
 };
 
 const styles = {

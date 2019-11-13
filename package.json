@@ -1,7 +1,7 @@
 {
   "name": "rc-file-manager",
   "productName": "RC_FileManager",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "An Electron file manager.",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
@@ -229,7 +229,7 @@
     "prettier": "^1.16.4",
     "react-test-renderer": "^16.8.6",
     "redux-logger": "^3.0.6",
-    "rimraf": "^2.6.3",
+    "rimraf": "^3.0.0",
     "sass-loader": "^7.1.0",
     "sinon": "^7.3.1",
     "spectron": "^5.0.0",
@@ -265,6 +265,7 @@
     "electron-updater": "^4.0.6",
     "fix-path": "^2.1.0",
     "fs": "^0.0.1-security",
+    "fs-extra": "^8.1.0",
     "history": "^4.9.0",
     "lodash": "^4.17.15",
     "mime-types": "^2.1.24",

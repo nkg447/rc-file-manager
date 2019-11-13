@@ -2,19 +2,38 @@ import React from 'react';
 import ContextMenuItem from './contextMenuItem';
 
 export default props => {
-  const { bounds, onOpen, onDelete, isTrashDir, ...otherProps } = props;
+  const {
+    bounds,
+    onOpen,
+    onDelete,
+    onCopy,
+    onCut,
+    onPaste,
+    onRefresh,
+    isTrashDir,
+    ...otherProps
+  } = props;
+  const { x, y, file } = bounds;
   return (
-    <div
-      style={{ ...styles.container, top: bounds.y, left: bounds.x }}
-      {...otherProps}
-    >
-      <ContextMenuItem onClick={onOpen}>Open</ContextMenuItem>
-      <ContextMenuItem onClick={onDelete}>
-        {isTrashDir ? 'Delete from Trash' : 'Move to Trash'}
-      </ContextMenuItem>
-      {isTrashDir ? (
-        <ContextMenuItem>Restore from Trash</ContextMenuItem>
-      ) : null}
+    <div style={{ ...styles.container, top: y, left: x }} {...otherProps}>
+      {file ? (
+        <>
+          <ContextMenuItem onClick={onOpen}>Open</ContextMenuItem>
+          <ContextMenuItem onClick={onCopy}>Copy</ContextMenuItem>
+          <ContextMenuItem onClick={onCut}>Cut</ContextMenuItem>
+          <ContextMenuItem onClick={onDelete}>
+            {isTrashDir ? 'Delete from Trash' : 'Move to Trash'}
+          </ContextMenuItem>
+          {isTrashDir ? (
+            <ContextMenuItem>Restore from Trash</ContextMenuItem>
+          ) : null}
+        </>
+      ) : (
+        <>
+          <ContextMenuItem onClick={onRefresh}>Refresh</ContextMenuItem>
+          <ContextMenuItem onClick={onPaste}>Paste</ContextMenuItem>
+        </>
+      )}
     </div>
   );
 };
