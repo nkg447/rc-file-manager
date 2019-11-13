@@ -38,16 +38,17 @@ export default class ContentBody extends Component {
       filePath,
       FileSystemService.isTrashDir(this.props.address) // if true then permanentDelete, else moveToTrash
     );
-    this.setState(prevState => ({
-      files: prevState.files.filter(f => f.name !== file.name),
+    this.props.refresh();
+    this.setState({
       showContextMenu: false
-    }));
+    });
   };
 
   updateState = () => {
     if (
       this.state.address !== this.props.address ||
-      this.state.fileIconSize !== this.props.fileIconSize
+      this.state.fileIconSize !== this.props.fileIconSize ||
+      this.state.files !== this.props.files
     ) {
       this.setState({
         ...this.props,
@@ -214,12 +215,14 @@ export default class ContentBody extends Component {
     filesToCopy.forEach(file => {
       const destinationPath = path.join(address, file.split('/').pop());
       FileSystemService.copyFile(file, destinationPath, () => {
+        this.props.refresh();
         this.setState({ showContextMenu: false });
       });
     });
     filesToCut.forEach(file => {
       const destinationPath = path.join(address, file.split('/').pop());
       FileSystemService.moveFile(file, destinationPath, () => {
+        this.props.refresh();
         this.setState({ showContextMenu: false });
       });
     });
