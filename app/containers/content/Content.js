@@ -6,7 +6,12 @@ import styles from './Content.css';
 import globalStyles from '../../app.global.css';
 import { connect } from 'react-redux';
 import searchFilesWithName from '../../utils/searchFilesWithName';
-import { changeAddress, navigateAddress } from '../../actions/fileManager';
+import {
+  changeAddress,
+  navigateAddress,
+  filesToCopy,
+  filesToCut
+} from '../../actions/fileManager';
 
 const fs = require('fs');
 const _ = require('lodash');
@@ -85,6 +90,8 @@ class Content extends Component {
           address={address}
           changeAddress={this.props.changeAddress}
           navigateAddress={this.props.navigateAddress}
+          filesToCopy={this.props.filesToCopy}
+          filesToCut={this.props.filesToCut}
           fileIconSize={this.state.fileIconSize}
         />
         <Footer
@@ -106,7 +113,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     changeAddress: address => dispatch(changeAddress(address)),
-    navigateAddress: toAddress => dispatch(navigateAddress(toAddress))
+    navigateAddress: toAddress => dispatch(navigateAddress(toAddress)),
+    filesToCopy: files => dispatch(filesToCopy(files)),
+    filesToCut: files => dispatch(filesToCut(files))
   };
 };
 

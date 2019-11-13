@@ -92,7 +92,38 @@ export default class ContentBody extends Component {
     this.setState({ selectedFiles: [] });
   };
 
-  keyPressHandler = e => {
+  recordFiles = (files, type) => {
+    this.props[type](files);
+    this.setState({
+      showContextMenu: false,
+      selectedFiles: [],
+      selectingRectBounds: {}
+    });
+  };
+
+  recordSelectedFilesToCopy = (file: undefined) => {
+    this.recordFiles(
+      file
+        ? [path.join(this.state.address, file.name)]
+        : this.state.selectedFiles.map(file =>
+            path.join(this.state.address, file.name)
+          ),
+      'filesToCopy'
+    );
+  };
+
+  recordSelectedFilesToCut = (file: undefined) => {
+    this.recordFiles(
+      file
+        ? [path.join(this.state.address, file.name)]
+        : this.state.selectedFiles.map(file =>
+            path.join(this.state.address, file.name)
+          ),
+      'filesToCut'
+    );
+  };
+
+  keyPressHandler = (e: React.KeyboardEvent) => {
     switch (e.key) {
       case 'ArrowRight':
         this.changeSelectedFileIndexBy(1);
@@ -131,6 +162,16 @@ export default class ContentBody extends Component {
 
       case 'Delete':
         this.moveSelectedFilesToTrash();
+        break;
+
+      case 'c':
+      case 'C':
+        if (e.ctrlKey) this.recordSelectedFilesToCopy();
+        break;
+
+      case 'x':
+      case 'X':
+        if (e.ctrlKey) this.recordSelectedFilesToCut();
         break;
 
       default:
@@ -178,7 +219,8 @@ export default class ContentBody extends Component {
                 selectingRectBounds: {
                   x1: e.clientX,
                   y1: e.clientY
-                }
+                },
+                showContextMenu: false
               });
             }}
             onMouseMoveCapture={this.mouseMoveHandler}
@@ -191,6 +233,7 @@ export default class ContentBody extends Component {
                 onDoubleClick={this.onDoubleClickHandler.bind(this, file)}
                 onContextMenu={e => this.onContext(e, file)}
                 fileIconSize={fileIconSize}
+                selected={this.state.selectedFiles.includes(file)}
               ></FileItem>
             ))}
           </div>
@@ -205,6 +248,20 @@ export default class ContentBody extends Component {
               if (this.state.selectedFiles.length > 0)
                 this.moveSelectedFilesToTrash();
               else this.onDeleteHandler(this.state.contextMenuBounds.file);
+            }}
+            onCopy={() => {
+              this.recordSelectedFilesToCopy(
+                this.state.selectedFiles.length > 0
+                  ? undefined
+                  : this.state.contextMenuBounds.file
+              );
+            }}
+            onCut={() => {
+              this.recordSelectedFilesToCut(
+                this.state.selectedFiles.length > 0
+                  ? undefined
+                  : this.state.contextMenuBounds.file
+              );
             }}
             bounds={this.state.contextMenuBounds}
             isTrashDir={FileSystemService.isTrashDir(address)}
