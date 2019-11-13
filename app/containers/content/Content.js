@@ -21,7 +21,10 @@ class Content extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fileIconSize: 50
+      fileIconSize: 50,
+      files: [],
+      address: props.fileManagerState.address,
+      updateFiles: false
     };
   }
   /**
@@ -86,12 +89,12 @@ class Content extends Component {
           changeAddress={this.props.changeAddress}
         ></Header>
         <ContentBody
+          {...this.props.fileManagerState}
           files={files}
-          address={address}
           changeAddress={this.props.changeAddress}
           navigateAddress={this.props.navigateAddress}
-          filesToCopy={this.props.filesToCopy}
-          filesToCut={this.props.filesToCut}
+          setFilesToCopy={this.props.setFilesToCopy}
+          setFilesToCut={this.props.setFilesToCut}
           fileIconSize={this.state.fileIconSize}
         />
         <Footer
@@ -114,8 +117,8 @@ const mapDispatchToProps = dispatch => {
   return {
     changeAddress: address => dispatch(changeAddress(address)),
     navigateAddress: toAddress => dispatch(navigateAddress(toAddress)),
-    filesToCopy: files => dispatch(filesToCopy(files)),
-    filesToCut: files => dispatch(filesToCut(files))
+    setFilesToCopy: files => dispatch(filesToCopy(files)),
+    setFilesToCut: files => dispatch(filesToCut(files))
   };
 };
 
