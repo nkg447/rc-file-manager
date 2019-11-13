@@ -1,11 +1,11 @@
 import React from 'react';
-import styles from './SidebarTop.css';
-import Colors from '../../theme/Color';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronRight,
   faChevronLeft
 } from '@fortawesome/free-solid-svg-icons';
+import styles from './SidebarTop.css';
+import Colors from '../../theme/Color';
 
 export default props => {
   const { navigateAddress, currentStackIndex, navigationStack } = props;

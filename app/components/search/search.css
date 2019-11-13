@@ -1,8 +1,8 @@
-:local(.search){
+:local(.search) {
   border-radius: 1000px;
   border: 2px solid #74b1be;
   background: inherit;
-  padding: 4px 10px ;
+  padding: 4px 10px;
   outline: none;
   color: #74b1be;
 }

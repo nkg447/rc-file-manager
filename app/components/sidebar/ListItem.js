@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styles from './ListItem.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import styles from './ListItem.css';
 
 export default props => {
   const { item, active, text, ...otherProps } = props;

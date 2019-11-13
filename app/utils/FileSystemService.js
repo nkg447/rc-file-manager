@@ -1,12 +1,3 @@
-const path = require('path');
-// const fs = require('fs');
-const fs = require('fs-extra');
-const rimraf = require('rimraf');
-const os = require('os');
-const HOME_DIR = os.homedir();
-const USERNAME = os.userInfo().username;
-const TRASH_DIR = path.join(HOME_DIR, '.local/share/Trash/files');
-const shell = require('electron').shell;
 import {
   faEject,
   faHome,
@@ -18,6 +9,17 @@ import {
   faTrash,
   faFile
 } from '@fortawesome/free-solid-svg-icons';
+
+const path = require('path');
+// const fs = require('fs');
+const fs = require('fs-extra');
+const rimraf = require('rimraf');
+const os = require('os');
+
+const HOME_DIR = os.homedir();
+const USERNAME = os.userInfo().username;
+const TRASH_DIR = path.join(HOME_DIR, '.local/share/Trash/files');
+const { shell } = require('electron');
 
 const getMountedDevices = () => {
   // mounted devices

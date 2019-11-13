@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Footer from '../../components/footer/Footer';
 import Header from '../../components/header/Header';
 import ContentBody from '../contentBody/ContentBody';
 import styles from './Content.css';
 import globalStyles from '../../app.global.css';
-import { connect } from 'react-redux';
 import searchFilesWithName from '../../utils/searchFilesWithName';
 import {
   changeAddress,
@@ -15,6 +15,7 @@ import {
 
 const fs = require('fs');
 const _ = require('lodash');
+
 const MAX_FILE_ICON_SIZE = 100;
 const MIN_FILE_ICON_SIZE = 30;
 class Content extends Component {
@@ -27,6 +28,7 @@ class Content extends Component {
       updateFiles: false
     };
   }
+
   /**
    * Reads files and folders list on search result or
    * current directory and sends to content body
@@ -45,22 +47,21 @@ class Content extends Component {
         folders: searchResultsList.folders,
         files: searchResultsList.files
       };
-    } else {
-      // Current directory files & folders
-      try {
-        const files = fs
-          .readdirSync(address, { withFileTypes: true })
-          .filter(file => !file.name.startsWith('.'))
-          .sort((f1, f2) => {
-            if (f1.isDirectory() == f2.isDirectory()) {
-              return f1.name.localeCompare(f2.name);
-            }
-            return f1.isDirectory() ? -1 : 1;
-          });
-        return files;
-      } catch (err) {
-        return [];
-      }
+    }
+    // Current directory files & folders
+    try {
+      const files = fs
+        .readdirSync(address, { withFileTypes: true })
+        .filter(file => !file.name.startsWith('.'))
+        .sort((f1, f2) => {
+          if (f1.isDirectory() == f2.isDirectory()) {
+            return f1.name.localeCompare(f2.name);
+          }
+          return f1.isDirectory() ? -1 : 1;
+        });
+      return files;
+    } catch (err) {
+      return [];
     }
   };
 
@@ -70,7 +71,7 @@ class Content extends Component {
       // _.debounce(input => {
       //   this.props.fetchClient Suggestions(input);
       // }, 500);
-      let searchResult = searchFilesWithName(searchFor);
+      const searchResult = searchFilesWithName(searchFor);
     }
   };
 
@@ -79,8 +80,8 @@ class Content extends Component {
   };
 
   render() {
-    let files = this.readDir();
-    let { address } = this.props.fileManagerState;
+    const files = this.readDir();
+    const { address } = this.props.fileManagerState;
     return (
       <div className={`${styles.container}`}>
         <Header

@@ -1,6 +1,7 @@
-import { changeAddress, Types } from '../actions/fileManager';
 import cloneDeep from 'lodash/cloneDeep';
 import os from 'os';
+import { changeAddress, Types } from '../actions/fileManager';
+
 const path = require('path');
 
 function getPathFromArgs() {

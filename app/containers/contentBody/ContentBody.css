@@ -5,5 +5,5 @@
   height: calc(100vh - 140px);
   overflow: auto;
   align-content: flex-start;
-  margin:10px;
+  margin: 10px;
 }

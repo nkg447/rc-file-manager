@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import fs from 'fs';
 import styles from './Sidebar.css';
 import ListItem from '../../components/sidebar/ListItem';
 import SidebarTop from '../../components/sidebar/SidebarTop';
-import { connect } from 'react-redux';
 import { changeAddress, navigateAddress } from '../../actions/fileManager';
-import fs from 'fs';
 import searchFiles from '../../utils/searchFilesWithName';
 import FileSystemService from '../../utils/FileSystemService';
+
 const path = require('path');
 
 class SideBar extends Component {
@@ -20,9 +21,9 @@ class SideBar extends Component {
   }
 
   render = () => {
-    let { sideList } = this;
-    let { home, address } = this.props.dirs;
-    let { changeAddress, navigateAddress } = this.props;
+    const { sideList } = this;
+    const { home, address } = this.props.dirs;
+    const { changeAddress, navigateAddress } = this.props;
     // searchFiles("surv",address);
 
     return (

@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import styles from './FileItem.css';
 import { connect } from 'react-redux';
-import Colors from '../../theme/Color';
-const mime = require('mime-types');
-const path = require('path');
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { createSelectable } from 'react-selectable-fast';
 import {
@@ -17,6 +13,11 @@ import {
   faFileCsv,
   faFileVideo
 } from '@fortawesome/free-solid-svg-icons';
+import Colors from '../../theme/Color';
+import styles from './FileItem.css';
+
+const mime = require('mime-types');
+const path = require('path');
 
 const programmingLanguages = [
   'java',

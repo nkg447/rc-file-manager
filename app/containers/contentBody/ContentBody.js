@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
+import { shell } from 'electron';
+import { SelectableGroup } from 'react-selectable-fast';
+import fs from 'fs';
 import styles from './ContentBody.css';
 import FileItem from '../../components/fileItem/FileItem';
-import { shell } from 'electron';
 import ContextMenu from '../../components/contextMenu/contextMenu';
 import FileSystemService from '../../utils/FileSystemService';
-import { SelectableGroup } from 'react-selectable-fast';
 import SelectingRect from '../../components/selectingRect/selectingRect';
-import fs from 'fs';
 
 const path = require('path');
+
 export default class ContentBody extends Component {
   constructor(props) {
     super(props);
@@ -67,7 +68,7 @@ export default class ContentBody extends Component {
       contextMenuBounds: {
         x: e.clientX,
         y: e.clientY,
-        file: file
+        file
       }
     });
   };
@@ -149,10 +150,8 @@ export default class ContentBody extends Component {
             if (e.key === 'ArrowUp')
               this.changeSelectedFileIndexBy(-noOfItemsInARow);
             else this.changeSelectedFileIndexBy(noOfItemsInARow);
-          } else {
-            if (e.key === 'ArrowUp') this.changeSelectedFileIndexBy(-1);
-            else this.changeSelectedFileIndexBy(1);
-          }
+          } else if (e.key === 'ArrowUp') this.changeSelectedFileIndexBy(-1);
+          else this.changeSelectedFileIndexBy(1);
         }
         break;
 
