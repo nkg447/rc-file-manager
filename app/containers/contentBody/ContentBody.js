@@ -301,6 +301,7 @@ export default class ContentBody extends Component {
             bounds={this.state.contextMenuBounds}
             isTrashDir={FileSystemService.isTrashDir(address)}
             onPaste={this.pasteFilesHandler}
+            onRefresh={this.props.refresh}
           ></ContextMenu>
         ) : null}
       </>
