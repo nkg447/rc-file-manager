@@ -267,6 +267,9 @@ export default class ContentBody extends Component {
                 }}
                 fileIconSize={fileIconSize}
                 selected={this.state.selectedFiles.includes(file)}
+                isToCut={this.props.filesToCut.includes(
+                  path.join(address, file.name)
+                )}
               ></FileItem>
             ))}
           </div>

@@ -4,8 +4,10 @@ import styles from './AddressBar.css';
 export default props => {
   const { address, changeAddress } = props;
   const [path, setPath] = React.useState(address);
-  if (path !== address) {
+  const [oldPath, setOldPath] = React.useState(address);
+  if (oldPath !== address) {
     setPath(address);
+    setOldPath(address);
   }
   return (
     <div className={styles.container}>
