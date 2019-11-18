@@ -1,4 +1,4 @@
-[Download](https://sourceforge.net/projects/rc-file-manager/files/v1.0.2/rc-file-manager_1.0.2_amd64.deb/download)
+[Download](https://sourceforge.net/projects/rc-file-manager/files/v1.0.2/rc-file-manager_1.0.3_amd64.deb/download)
 # Ridiculously Cool File Manager
 
 An electron based file manager.
