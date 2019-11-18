@@ -55,8 +55,10 @@ export default createSelectable(props => {
     isSelecting,
     selectableRef,
     selected,
+    isToCut,
     ...otherProps
   } = props;
+
   const isDirectory = file.isDirectory();
   const iconStyle = {
     fontSize: fileIconSize,
@@ -74,7 +76,11 @@ export default createSelectable(props => {
       icon={isDirectory ? faFolder : addressToIcon(file.name)}
       style={iconStyle}
       color={
-        selected || isSelecting ? Colors.selectedFileIcon : Colors.fileIcon
+        selected || isSelecting
+          ? Colors.selectedFileIcon
+          : isToCut
+          ? Colors.onCutFileIcon
+          : Colors.fileIcon
       }
     />
   );
