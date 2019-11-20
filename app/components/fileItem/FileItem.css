@@ -1,12 +1,10 @@
 :local(.container) {
-  height: 5rem;
   width: 5rem;
   margin: 0.5rem;
   padding: 5px;
 }
 
 :local(.selectedContainer) {
-  height: 5rem;
   width: 5rem;
   margin: 0.5rem;
   padding: 5px;
@@ -26,4 +24,10 @@
   word-break: break-all;
   width: 100%;
   color: currentColor;
+}
+
+:local(.rename) {
+  font-size: 12px;
+  width: 100%;
+  color: black;
 }

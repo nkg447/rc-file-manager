@@ -18,7 +18,8 @@ export default class ContentBody extends Component {
       selectedFiles: [],
       showContextMenu: false,
       contextMenuBounds: {},
-      selectingRectBounds: {}
+      selectingRectBounds: {},
+      fileToRename: undefined
     };
     this.isMouseDown = false;
   }
@@ -58,7 +59,8 @@ export default class ContentBody extends Component {
     }
 
     try {
-      document.getElementById('mainContent').focus();
+      if (!this.state.fileToRename)
+        document.getElementById('mainContent').focus();
     } catch (err) {}
   };
 
@@ -230,6 +232,26 @@ export default class ContentBody extends Component {
     this.props.setFilesToCut([]);
   };
 
+  onRenameHandler = file => {
+    this.setState({ fileToRename: file, showContextMenu: false });
+  };
+
+  renameFileHandler = (file, newName) => {
+    FileSystemService.renameFile(
+      path.join(this.props.address, file.name),
+      path.join(this.props.address, newName)
+    );
+    this.setState(prevState => {
+      return {
+        fileToRename: undefined,
+        files: prevState.files.map(f => {
+          if (f === file) f.name = newName;
+          return f;
+        })
+      };
+    });
+  };
+
   render() {
     const { files, address, selectedFiles, fileIconSize } = this.state;
     this.updateState();
@@ -239,7 +261,7 @@ export default class ContentBody extends Component {
         <SelectableGroup onSelectionFinish={this.handleSelection} resetOnStart>
           <div
             className={styles.container}
-            onKeyDown={this.keyPressHandler}
+            onKeyDown={this.state.fileToRename ? null : this.keyPressHandler}
             tabIndex="-1"
             id="mainContent"
             onMouseDownCapture={e => {
@@ -270,6 +292,10 @@ export default class ContentBody extends Component {
                 isToCut={this.props.filesToCut.includes(
                   path.join(address, file.name)
                 )}
+                rename={this.state.fileToRename === file}
+                renameFileHandler={newName =>
+                  this.renameFileHandler(file, newName)
+                }
               ></FileItem>
             ))}
           </div>
@@ -305,6 +331,10 @@ export default class ContentBody extends Component {
             isTrashDir={FileSystemService.isTrashDir(address)}
             onPaste={this.pasteFilesHandler}
             onRefresh={this.props.refresh}
+            onRename={this.onRenameHandler.bind(
+              this,
+              this.state.contextMenuBounds.file
+            )}
           ></ContextMenu>
         ) : null}
       </>

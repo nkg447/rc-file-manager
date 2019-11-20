@@ -56,8 +56,16 @@ export default createSelectable(props => {
     selectableRef,
     selected,
     isToCut,
+    rename,
+    renameFileHandler,
     ...otherProps
   } = props;
+
+  try {
+    document.getElementById('fileRename').focus();
+  } catch (err) {}
+
+  const [fileName, setFileName] = React.useState(file.name);
 
   const isDirectory = file.isDirectory();
   const iconStyle = {
@@ -66,7 +74,6 @@ export default createSelectable(props => {
     maxWidth: fileIconSize
   };
   const containerStyle = {
-    height: fileIconSize + 35,
     width: fileIconSize + 30
   };
   const icon = isImage(file.name) ? (
@@ -95,9 +102,28 @@ export default createSelectable(props => {
       {...otherProps}
     >
       {icon}
-      <p className={styles.name}>
-        {file.name.substring(0, 18) + (file.name.length > 18 ? '...' : '')}
-      </p>
+      {rename ? (
+        <input
+          id="fileRename"
+          className={styles.rename}
+          value={fileName}
+          onChange={e => {
+            setFileName(e.target.value);
+            e.stopPropagation();
+          }}
+          onKeyUp={e => {
+            e.key === 'Enter' ? renameFileHandler(fileName) : null;
+            e.stopPropagation();
+          }}
+          type="text"
+        />
+      ) : (
+        <p className={styles.name}>
+          {selected
+            ? file.name
+            : file.name.substring(0, 28) + (file.name.length > 28 ? '...' : '')}
+        </p>
+      )}
     </div>
   );
 });
