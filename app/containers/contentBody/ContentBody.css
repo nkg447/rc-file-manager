@@ -6,4 +6,5 @@
   overflow: auto;
   align-content: flex-start;
   margin: 10px;
+  align-items: flex-start;
 }

@@ -10,6 +10,7 @@ export default props => {
     onCut,
     onPaste,
     onRefresh,
+    onRename,
     isTrashDir,
     ...otherProps
   } = props;
@@ -26,7 +27,9 @@ export default props => {
           </ContextMenuItem>
           {isTrashDir ? (
             <ContextMenuItem>Restore from Trash</ContextMenuItem>
-          ) : null}
+          ) : (
+            <ContextMenuItem onClick={onRename}>Rename</ContextMenuItem>
+          )}
         </>
       ) : (
         <>
