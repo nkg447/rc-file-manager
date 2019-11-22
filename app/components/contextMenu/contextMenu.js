@@ -10,7 +10,9 @@ export default props => {
     onCut,
     onPaste,
     onRefresh,
+    onRename,
     isTrashDir,
+    onNewFolder,
     ...otherProps
   } = props;
   const { x, y, file } = bounds;
@@ -26,10 +28,13 @@ export default props => {
           </ContextMenuItem>
           {isTrashDir ? (
             <ContextMenuItem>Restore from Trash</ContextMenuItem>
-          ) : null}
+          ) : (
+            <ContextMenuItem onClick={onRename}>Rename</ContextMenuItem>
+          )}
         </>
       ) : (
         <>
+          <ContextMenuItem onClick={onNewFolder}>New Folder</ContextMenuItem>
           <ContextMenuItem onClick={onRefresh}>Refresh</ContextMenuItem>
           <ContextMenuItem onClick={onPaste}>Paste</ContextMenuItem>
         </>
