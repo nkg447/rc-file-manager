@@ -88,6 +88,11 @@ const renameFile = (sourcePath, newPath, cb = () => {}) => {
   cb();
 };
 
+const newFolder = (folderPath, cb = () => {}) => {
+  fs.mkdirSync(folderPath, { recursive: false });
+  cb();
+};
+
 const isTrashDir = address => TRASH_DIR === address;
 
 export default {
@@ -98,5 +103,6 @@ export default {
   isTrashDir,
   copyFile,
   moveFile,
-  renameFile
+  renameFile,
+  newFolder
 };

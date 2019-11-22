@@ -237,10 +237,15 @@ export default class ContentBody extends Component {
   };
 
   renameFileHandler = (file, newName) => {
-    FileSystemService.renameFile(
-      path.join(this.props.address, file.name),
-      path.join(this.props.address, newName)
-    );
+    if (file.isNewFolder) {
+      FileSystemService.newFolder(path.join(this.props.address, newName));
+      file.isNewFolder = false;
+    } else {
+      FileSystemService.renameFile(
+        path.join(this.props.address, file.name),
+        path.join(this.props.address, newName)
+      );
+    }
     this.setState(prevState => {
       return {
         fileToRename: undefined,
@@ -248,6 +253,23 @@ export default class ContentBody extends Component {
           if (f === file) f.name = newName;
           return f;
         })
+      };
+    });
+  };
+
+  onNewFolder = () => {
+    this.setState(prevState => {
+      const newFolder = {
+        name: 'New Folder',
+        isDirectory: () => true,
+        isFile: () => false,
+        isNewFolder: true
+      };
+      prevState.files.push(newFolder);
+      return {
+        files: prevState.files,
+        fileToRename: newFolder,
+        showContextMenu: false
       };
     });
   };
@@ -335,6 +357,7 @@ export default class ContentBody extends Component {
               this,
               this.state.contextMenuBounds.file
             )}
+            onNewFolder={this.onNewFolder}
           ></ContextMenu>
         ) : null}
       </>
