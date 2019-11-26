@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { shell } from 'electron';
 import { SelectableGroup } from 'react-selectable-fast';
 import fs from 'fs';
+import { exec } from 'child_process';
+import styled from 'styled-components';
 import styles from './ContentBody.css';
 import FileItem from '../../components/fileItem/FileItem';
 import ContextMenu from '../../components/contextMenu/contextMenu';
 import FileSystemService from '../../utils/FileSystemService';
 import SelectingRect from '../../components/selectingRect/selectingRect';
-import { exec } from 'child_process';
+import { Color } from '../../theme';
 
 const path = require('path');
 const OS = require('os');
@@ -292,8 +294,7 @@ export default class ContentBody extends Component {
       <>
         <SelectingRect {...this.state.selectingRectBounds}></SelectingRect>
         <SelectableGroup onSelectionFinish={this.handleSelection} resetOnStart>
-          <div
-            className={styles.container}
+          <Container
             onKeyDown={this.state.fileToRename ? null : this.keyPressHandler}
             tabIndex="-1"
             id="mainContent"
@@ -331,7 +332,7 @@ export default class ContentBody extends Component {
                 }
               ></FileItem>
             ))}
-          </div>
+          </Container>
         </SelectableGroup>
         {this.state.showContextMenu ? (
           <ContextMenu
@@ -376,3 +377,14 @@ export default class ContentBody extends Component {
     );
   }
 }
+
+const Container = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  height: calc(100vh - 140px);
+  overflow: auto;
+  align-content: flex-start;
+  margin: 10px;
+  align-items: flex-start;
+`;

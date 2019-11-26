@@ -4,8 +4,9 @@ import {
   faChevronRight,
   faChevronLeft
 } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components';
 import styles from './SidebarTop.css';
-import Colors from '../../theme/Color';
+import { Color } from '../../theme';
 
 export default props => {
   const { navigateAddress, currentStackIndex, navigationStack } = props;
@@ -17,21 +18,52 @@ export default props => {
   const navigateOnClick = to => {
     if (canGo(to)) navigateAddress(to);
   };
+  const PrevIconContainer = canGo('prev') ? ActiveIcon : Icon;
+  const NextIconContainer = canGo('next') ? ActiveIcon : Icon;
   return (
-    <div className={styles.container}>
-      <div className={styles.logo}>R C</div>
-      <div className={styles.navigate}>
-        <FontAwesomeIcon
+    <Container>
+      <LOGO>R C</LOGO>
+      <Navigate>
+        <PrevIconContainer
           onClick={() => navigateOnClick('prev')}
-          className={canGo('prev') ? styles.activeIcon : styles.icon}
           icon={faChevronLeft}
         />
-        <FontAwesomeIcon
+        <NextIconContainer
           onClick={() => navigateOnClick('next')}
-          className={canGo('next') ? styles.activeIcon : styles.icon}
           icon={faChevronRight}
         />
-      </div>
-    </div>
+      </Navigate>
+    </Container>
   );
 };
+const Container = styled.div`
+  display: flex;
+  margin: 0.5rem;
+  height: 3rem;
+  justify-content: space-evenly;
+  align-items: center;
+`;
+const LOGO = styled.div`
+  font-size: x-large;
+`;
+const Navigate = styled.div`
+  width: 2rem;
+  font-size: 2rem;
+  display: flex;
+  justify-content: space-around;
+`;
+const Icon = styled(FontAwesomeIcon)`
+  width: 100%;
+  border: 1px solid;
+  color: ${Color.sidebarBackground};
+  background-color: ${Color.sidebar};
+`;
+const ActiveIcon = styled(FontAwesomeIcon)`
+  width: 100%;
+  border: 1px solid;
+  color: ${Color.sidebar};
+  &:hover {
+    color: ${Color.sidebarBackground};
+    background-color: ${Color.sidebar};
+  }
+`;
