@@ -13,6 +13,7 @@ export default props => {
     onRename,
     isTrashDir,
     onNewFolder,
+    onOpenInTerminal,
     ...otherProps
   } = props;
   const { x, y, file } = bounds;
@@ -37,6 +38,9 @@ export default props => {
           <ContextMenuItem onClick={onNewFolder}>New Folder</ContextMenuItem>
           <ContextMenuItem onClick={onRefresh}>Refresh</ContextMenuItem>
           <ContextMenuItem onClick={onPaste}>Paste</ContextMenuItem>
+          <ContextMenuItem onClick={onOpenInTerminal}>
+            Open in Terminal
+          </ContextMenuItem>
         </>
       )}
     </div>

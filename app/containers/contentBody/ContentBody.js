@@ -7,8 +7,10 @@ import FileItem from '../../components/fileItem/FileItem';
 import ContextMenu from '../../components/contextMenu/contextMenu';
 import FileSystemService from '../../utils/FileSystemService';
 import SelectingRect from '../../components/selectingRect/selectingRect';
+import { exec } from 'child_process';
 
 const path = require('path');
+const OS = require('os');
 
 export default class ContentBody extends Component {
   constructor(props) {
@@ -274,6 +276,15 @@ export default class ContentBody extends Component {
     });
   };
 
+  onOpenInTerminal = () => {
+    if (OS.type() === 'Linux')
+      exec(
+        `gnome-terminal --working-directory='${path.join(this.state.address)}'`
+      );
+
+    this.setState({ showContextMenu: false });
+  };
+
   render() {
     const { files, address, selectedFiles, fileIconSize } = this.state;
     this.updateState();
@@ -358,6 +369,7 @@ export default class ContentBody extends Component {
               this.state.contextMenuBounds.file
             )}
             onNewFolder={this.onNewFolder}
+            onOpenInTerminal={this.onOpenInTerminal}
           ></ContextMenu>
         ) : null}
       </>
