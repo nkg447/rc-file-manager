@@ -85,7 +85,7 @@ class Content extends Component {
 
   render() {
     const { address } = this.props.fileManagerState;
-    let files = this.state.files;
+    let { files } = this.state;
     if (this.state.updateFiles || this.state.address !== address) {
       files = this.readDir();
       this.setState({ updateFiles: false, files, address });
