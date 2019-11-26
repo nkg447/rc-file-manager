@@ -1,7 +1,12 @@
 export default {
-  fileIcon: '#6cccfc',
-  selectedFileIcon: '#74b1be',
-  sidebarBackground: '#2c2e3b',
-  sidebar: '#74b1be',
-  onCutFileIcon: '#b7e6fe'
+  fileIcon: '#6ac4fc',
+  selectedFileIcon: 'white',
+  selectedFileBackground: '#6ac4fc',
+  fileName: 'black',
+  sidebarBackground: '#f9f9fa',
+  sidebar: 'black',
+  onCutFileIcon: '#b7e6fe',
+  selectedSidebarItemBackground: '#d5edfe',
+  selectedSidebarItem: 'black',
+  sidebarBorder: 'lightgrey'
 };

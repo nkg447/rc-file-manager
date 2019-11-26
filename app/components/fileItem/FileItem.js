@@ -64,7 +64,8 @@ export default createSelectable(props => {
 
   try {
     document.getElementById('fileRename').focus();
-  } catch (err) {}
+  } catch (err) {
+  }
 
   const [fileName, setFileName] = React.useState(file.name);
 
@@ -78,7 +79,7 @@ export default createSelectable(props => {
     width: fileIconSize + 30
   };
   const icon = isImage(file.name) ? (
-    <img src={path.join(address, file.name)} style={iconStyle} />
+    <img src={path.join(address, file.name)} style={iconStyle}/>
   ) : (
     <FontAwesomeIcon
       icon={isDirectory ? faFolder : addressToIcon(file.name)}
@@ -134,7 +135,7 @@ const Container = styled.div`
 `;
 const SelectedContainer = styled(Container)`
   border-radius: 10px;
-  background-color: ${Color.sidebarBackground};
+  background-color: ${Color.selectedFileBackground};
   color: white;
 `;
 
@@ -142,7 +143,7 @@ const NameP = styled.p`
   font-size: 12px;
   word-break: break-all;
   width: 100%;
-  color: currentColor;
+  color: ${Color.fileName};
 `;
 const Rename = styled.input`
   font-size: 12px;
