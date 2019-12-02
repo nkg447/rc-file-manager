@@ -17,7 +17,7 @@ export default class Header extends Component {
 }
 
 const Container = styled.div`
-  border-bottom: 1px solid;
+  border-bottom: 1px solid ${Color.sidebarBorder};
   height: 70px;
   background: ${Color.sidebarBackground};
   display: flex;
