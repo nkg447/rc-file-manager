@@ -189,10 +189,22 @@ export default class ContentBody extends Component {
         if (e.ctrlKey) this.pasteFilesHandler();
         break;
 
+      case 'a':
+      case 'A':
+        if (e.ctrlKey) this.selectAllFiles();
+        break;
+
       default:
         console.log(e.key, 'key pressed');
         break;
     }
+  };
+
+  selectAllFiles = () => {
+    this.isMouseDown = false;
+    this.setState(prevState => {
+      return { selectedFiles: [...prevState.files], selectingRectBounds: {} };
+    });
   };
 
   handleSelection = selectedFiles => {
