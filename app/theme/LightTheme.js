@@ -2,6 +2,7 @@ const colors = {
   contentBackground: 'white',
   fileIcon: '#6ac4fc',
   fileName: 'black',
+  homeDirectoryIconOnFileIcon: 'black',
   onCutFileIcon: '#b7e6fe',
   selectedFileIcon: 'white',
   selectedFileBackground: '#6ac4fc',
