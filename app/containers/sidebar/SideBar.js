@@ -30,7 +30,7 @@ class SideBar extends Component {
 
     return (
       <Container>
-        <SidebarTop {...this.props.dirs} {...this.props}></SidebarTop>
+        <SidebarTop {...this.props.dirs} {...this.props}/>
         <div>
           <OptionsList>
             {Object.keys(sideList).map((addr, i) => {
@@ -57,6 +57,7 @@ const Container = styled.div`
   height: 100vh;
   width: 20rem;
   color: ${Color.sidebar};
+  border: 1px solid ${Color.sidebarBorder};
 `;
 
 const OptionsList = styled.ul`

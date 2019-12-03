@@ -10,7 +10,9 @@ export default props => {
   const ListItemComponent = active ? ActiveListItem : ListItem;
   return (
     <ListItemComponent data-address={item.path} {...otherProps}>
-      <p>{text}</p>
+      <p>
+        <strong>{text}</strong>
+      </p>
       {item.icon ? <StyledFontAwesomeIcon icon={item.icon} /> : null}
     </ListItemComponent>
   );
@@ -25,13 +27,14 @@ const ListItem = styled.li`
   cursor: pointer;
 
   &:hover {
-    background-color: ${Color.selectedFileIcon};
-    color: #2c2e3b;
+    background-color: ${Color.selectedSidebarItemBackground};
+    color: ${Color.selectedSidebarItem};
   }
 `;
 const ActiveListItem = styled(ListItem)`
-  background-color: ${Color.selectedFileIcon};
-  color: ${Color.sidebarBackground} !important;
+  background-color: ${Color.selectedSidebarItemBackground};
+  color: ${Color.selectedSidebarItem} !important;
+  border-left: 5px solid ${Color.sidebarActiveItemLeftBorder};
 `;
 
 const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`

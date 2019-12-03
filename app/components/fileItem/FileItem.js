@@ -131,18 +131,19 @@ export default createSelectable(props => {
 const Container = styled.div`
   margin: 0.5rem;
   padding: 5px;
+  color: ${Color.fileName};
 `;
 const SelectedContainer = styled(Container)`
   border-radius: 10px;
-  background-color: ${Color.sidebarBackground};
+  background-color: ${Color.selectedFileBackground};
   color: white;
+  color: ${Color.selectedFileName};
 `;
 
 const NameP = styled.p`
   font-size: 12px;
   word-break: break-all;
   width: 100%;
-  color: currentColor;
 `;
 const Rename = styled.input`
   font-size: 12px;

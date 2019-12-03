@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import styles from './Footer.css';
+import { Color } from '../../theme';
+import styled from 'styled-components';
 
 const MAX_FILE_ICON_SIZE = 100;
 const MIN_FILE_ICON_SIZE = 30;
@@ -26,9 +28,9 @@ export default props => {
       fileIconSizeHandler(newFileIconSize);
   };
   return (
-    <div className={styles.container}>
-      <div className={styles.numberOfItems}>{files.length} items</div>
-      <div className={styles.fontSizeDial}>
+    <Container>
+      <NumberOfItems>{files.length} items</NumberOfItems>
+      <FontSizeDial>
         <div
           draggable
           onDrag={onDragHandler}
@@ -46,7 +48,23 @@ export default props => {
             style={{ width: `${100 - activeWidth}%` }}
           ></div>
         </div>
-      </div>
-    </div>
+      </FontSizeDial>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  padding: 1rem;
+  border-top: 1px solid;
+  display: flex;
+  justify-content: space-between;
+`;
+const NumberOfItems = styled.div`
+  color: gray;
+`;
+const FontSizeDial = styled.div`
+  width: 100px;
+  height: 5px;
+  display: flex;
+  border-radius: 5px;
+`;

@@ -38,30 +38,32 @@ export default props => {
 };
 const Container = styled.div`
   display: flex;
-  margin: 0.5rem;
-  height: 3rem;
+  padding: 0 10px;
+  height: 70px;
   justify-content: space-evenly;
   align-items: center;
+  border-bottom: 1px solid ${Color.sidebarBorder};
 `;
 const LOGO = styled.div`
   font-size: x-large;
 `;
 const Navigate = styled.div`
-  width: 2rem;
+  width: 3rem;
   font-size: 2rem;
   display: flex;
-  justify-content: space-around;
+  border: 1px solid;
 `;
 const Icon = styled(FontAwesomeIcon)`
-  width: 100%;
+  flex: 1;
   border: 1px solid;
   color: ${Color.sidebarBackground};
   background-color: ${Color.sidebar};
 `;
 const ActiveIcon = styled(FontAwesomeIcon)`
-  width: 100%;
+  flex: 1;
   border: 1px solid;
   color: ${Color.sidebar};
+  cursor: pointer;
   &:hover {
     color: ${Color.sidebarBackground};
     background-color: ${Color.sidebar};

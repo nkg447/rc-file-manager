@@ -26,6 +26,6 @@ const styles = {
   container: {
     position: 'absolute',
     border: '1px dotted skyblue',
-    backgroundColor: 'rgba(116, 177, 190, 0.5)'
+    backgroundColor: 'rgba(213, 237, 254, 0.5)'
   }
 };
