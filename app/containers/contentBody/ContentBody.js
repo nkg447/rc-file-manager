@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import { shell } from 'electron';
 import { SelectableGroup } from 'react-selectable-fast';
 import fs from 'fs';
+import { exec } from 'child_process';
+import styled from 'styled-components';
 import styles from './ContentBody.css';
 import FileItem from '../../components/fileItem/FileItem';
 import ContextMenu from '../../components/contextMenu/contextMenu';
 import FileSystemService from '../../utils/FileSystemService';
 import SelectingRect from '../../components/selectingRect/selectingRect';
+import { Color } from '../../theme';
 
 const path = require('path');
+const OS = require('os');
 
 export default class ContentBody extends Component {
   constructor(props) {
@@ -185,10 +189,22 @@ export default class ContentBody extends Component {
         if (e.ctrlKey) this.pasteFilesHandler();
         break;
 
+      case 'a':
+      case 'A':
+        if (e.ctrlKey) this.selectAllFiles();
+        break;
+
       default:
         console.log(e.key, 'key pressed');
         break;
     }
+  };
+
+  selectAllFiles = () => {
+    this.isMouseDown = false;
+    this.setState(prevState => {
+      return { selectedFiles: [...prevState.files], selectingRectBounds: {} };
+    });
   };
 
   handleSelection = selectedFiles => {
@@ -274,6 +290,15 @@ export default class ContentBody extends Component {
     });
   };
 
+  onOpenInTerminal = () => {
+    if (OS.type() === 'Linux')
+      exec(
+        `gnome-terminal --working-directory='${path.join(this.state.address)}'`
+      );
+
+    this.setState({ showContextMenu: false });
+  };
+
   render() {
     const { files, address, selectedFiles, fileIconSize } = this.state;
     this.updateState();
@@ -281,8 +306,7 @@ export default class ContentBody extends Component {
       <>
         <SelectingRect {...this.state.selectingRectBounds}></SelectingRect>
         <SelectableGroup onSelectionFinish={this.handleSelection} resetOnStart>
-          <div
-            className={styles.container}
+          <Container
             onKeyDown={this.state.fileToRename ? null : this.keyPressHandler}
             tabIndex="-1"
             id="mainContent"
@@ -320,7 +344,7 @@ export default class ContentBody extends Component {
                 }
               ></FileItem>
             ))}
-          </div>
+          </Container>
         </SelectableGroup>
         {this.state.showContextMenu ? (
           <ContextMenu
@@ -358,9 +382,21 @@ export default class ContentBody extends Component {
               this.state.contextMenuBounds.file
             )}
             onNewFolder={this.onNewFolder}
+            onOpenInTerminal={this.onOpenInTerminal}
           ></ContextMenu>
         ) : null}
       </>
     );
   }
 }
+
+const Container = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  height: calc(100vh - 140px);
+  overflow: auto;
+  align-content: flex-start;
+  margin: 10px;
+  align-items: flex-start;
+`;

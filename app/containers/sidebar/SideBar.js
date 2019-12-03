@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import fs from 'fs';
+import styled from 'styled-components';
 import styles from './Sidebar.css';
 import ListItem from '../../components/sidebar/ListItem';
 import SidebarTop from '../../components/sidebar/SidebarTop';
 import { changeAddress, navigateAddress } from '../../actions/fileManager';
 import searchFiles from '../../utils/searchFilesWithName';
 import FileSystemService from '../../utils/FileSystemService';
+import { Color } from '../../theme';
 
 const path = require('path');
 
@@ -27,10 +29,10 @@ class SideBar extends Component {
     // searchFiles("surv",address);
 
     return (
-      <div className={styles.container}>
-        <SidebarTop {...this.props.dirs} {...this.props}></SidebarTop>
+      <Container>
+        <SidebarTop {...this.props.dirs} {...this.props}/>
         <div>
-          <ul className={styles.optionsList}>
+          <OptionsList>
             {Object.keys(sideList).map((addr, i) => {
               const newPath = sideList[addr].path;
               return (
@@ -43,12 +45,27 @@ class SideBar extends Component {
                 />
               );
             })}
-          </ul>
+          </OptionsList>
         </div>
-      </div>
+      </Container>
     );
   };
 }
+
+const Container = styled.div`
+  background-color: ${Color.sidebarBackground};
+  height: 100vh;
+  width: 20rem;
+  color: ${Color.sidebar};
+  border: 1px solid ${Color.sidebarBorder};
+`;
+
+const OptionsList = styled.ul`
+  width: 100%;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+`;
 
 const mapStateToProps = state => ({
   dirs: state.fileManager

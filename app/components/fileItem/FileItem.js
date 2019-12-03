@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { createSelectable } from 'react-selectable-fast';
+import styled from 'styled-components';
 import {
   faFolder,
   faFile,
@@ -13,7 +14,7 @@ import {
   faFileCsv,
   faFileVideo
 } from '@fortawesome/free-solid-svg-icons';
-import Colors from '../../theme/Color';
+import { Color } from '../../theme';
 import styles from './FileItem.css';
 
 const mime = require('mime-types');
@@ -84,28 +85,27 @@ export default createSelectable(props => {
       style={iconStyle}
       color={
         selected || isSelecting
-          ? Colors.selectedFileIcon
+          ? Color.selectedFileIcon
           : isToCut
-          ? Colors.onCutFileIcon
-          : Colors.fileIcon
+          ? Color.onCutFileIcon
+          : Color.fileIcon
       }
     />
   );
 
+  const ContainerComponent =
+    selected || isSelecting ? SelectedContainer : Container;
+
   return (
-    <div
-      ref={selectableRef}
-      className={
-        selected || isSelecting ? styles.selectedContainer : styles.container
-      }
+    <ContainerComponent
       style={containerStyle}
+      ref={selectableRef}
       {...otherProps}
     >
       {icon}
       {rename ? (
-        <input
+        <Rename
           id="fileRename"
-          className={styles.rename}
           value={fileName}
           onChange={e => {
             setFileName(e.target.value);
@@ -118,12 +118,35 @@ export default createSelectable(props => {
           type="text"
         />
       ) : (
-        <p className={styles.name}>
+        <NameP>
           {selected
             ? file.name
             : file.name.substring(0, 28) + (file.name.length > 28 ? '...' : '')}
-        </p>
+        </NameP>
       )}
-    </div>
+    </ContainerComponent>
   );
 });
+
+const Container = styled.div`
+  margin: 0.5rem;
+  padding: 5px;
+  color: ${Color.fileName};
+`;
+const SelectedContainer = styled(Container)`
+  border-radius: 10px;
+  background-color: ${Color.selectedFileBackground};
+  color: white;
+  color: ${Color.selectedFileName};
+`;
+
+const NameP = styled.p`
+  font-size: 12px;
+  word-break: break-all;
+  width: 100%;
+`;
+const Rename = styled.input`
+  font-size: 12px;
+  width: 100%;
+  color: black;
+`;

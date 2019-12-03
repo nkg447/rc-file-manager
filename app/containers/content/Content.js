@@ -12,6 +12,8 @@ import {
   filesToCopy,
   filesToCut
 } from '../../actions/fileManager';
+import styled from 'styled-components';
+import { Color } from '../../theme';
 
 const fs = require('fs');
 const _ = require('lodash');
@@ -85,13 +87,13 @@ class Content extends Component {
 
   render() {
     const { address } = this.props.fileManagerState;
-    let files = this.state.files;
+    let { files } = this.state;
     if (this.state.updateFiles || this.state.address !== address) {
       files = this.readDir();
       this.setState({ updateFiles: false, files, address });
     }
     return (
-      <div className={`${styles.container}`}>
+      <Container>
         <Header
           address={address}
           searchValueChange={this.searchValueChange}
@@ -112,7 +114,7 @@ class Content extends Component {
           fileIconSize={this.state.fileIconSize}
           files={files}
         ></Footer>
-      </div>
+      </Container>
     );
   }
 }
@@ -136,3 +138,11 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Content);
+
+const Container = styled.div`
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: ${Color.contentBackground};
+`;

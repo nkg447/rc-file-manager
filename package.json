@@ -1,7 +1,7 @@
 {
   "name": "rc-file-manager",
   "productName": "RC_FileManager",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "An Electron file manager.",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
@@ -279,7 +279,8 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "sass": "^1.23.0",
-    "source-map-support": "^0.5.11"
+    "source-map-support": "^0.5.11",
+    "styled-components": "^4.4.1"
   },
   "devEngines": {
     "node": ">=7.x",
