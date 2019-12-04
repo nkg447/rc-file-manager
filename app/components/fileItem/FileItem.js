@@ -113,7 +113,7 @@ export default createSelectable(props => {
       {...otherProps}
     >
       <div style={{ position: 'relative' }}>
-        <StyledFontAwesomeIcon icon={iconOverlay} />
+        {iconOverlay ? <StyledFontAwesomeIcon icon={iconOverlay} /> : null}
         {icon}
       </div>
 
