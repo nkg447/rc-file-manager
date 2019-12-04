@@ -14,6 +14,10 @@ import { Color } from '../../theme';
 const path = require('path');
 const OS = require('os');
 
+let timer = 0;
+let delay = 200;
+let prevent = false;
+
 export default class ContentBody extends Component {
   constructor(props) {
     super(props);
@@ -29,6 +33,8 @@ export default class ContentBody extends Component {
   }
 
   onDoubleClickHandler = file => {
+    clearTimeout(timer);
+    prevent = true;
     const filePath = path.join(this.props.address, file.name);
     if (file.isDirectory()) {
       this.props.changeAddress(filePath);
@@ -299,18 +305,32 @@ export default class ContentBody extends Component {
     this.setState({ showContextMenu: false });
   };
 
+  onClickHandler = file => {
+    let me = this;
+    timer = setTimeout(function() {
+      if (!prevent) {
+        me.setState({ selectedFiles: [file] });
+      }
+      prevent = false;
+    }, delay);
+  };
+
   render() {
     const { files, address, selectedFiles, fileIconSize } = this.state;
     this.updateState();
     return (
       <>
         <SelectingRect {...this.state.selectingRectBounds}></SelectingRect>
-        <SelectableGroup onSelectionFinish={this.handleSelection} resetOnStart>
+        <SelectableGroup
+          allowClickWithoutSelected={false}
+          onSelectionFinish={this.handleSelection}
+          resetOnStart
+        >
           <Container
             onKeyDown={this.state.fileToRename ? null : this.keyPressHandler}
             tabIndex="-1"
             id="mainContent"
-            onMouseDownCapture={e => {
+            onMouseDown={e => {
               this.isMouseDown = true;
               this.setState({
                 selectingRectBounds: {
@@ -320,7 +340,10 @@ export default class ContentBody extends Component {
                 showContextMenu: false
               });
             }}
-            onMouseMoveCapture={this.mouseMoveHandler}
+            onMouseUp={e => {
+              this.setState({ selectingRectBounds: {} });
+            }}
+            onMouseMove={this.mouseMoveHandler}
             onContextMenu={this.onContext}
           >
             {files.map((file, i) => (
@@ -333,6 +356,7 @@ export default class ContentBody extends Component {
                   this.onContext(e, file);
                   e.stopPropagation();
                 }}
+                onClick={this.onClickHandler.bind(this, file)}
                 fileIconSize={fileIconSize}
                 selected={this.state.selectedFiles.includes(file)}
                 isToCut={this.props.filesToCut.includes(

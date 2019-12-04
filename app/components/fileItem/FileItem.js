@@ -16,7 +16,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Color } from '../../theme';
 import styles from './FileItem.css';
+import FileSystemService from '../../utils/FileSystemService';
 
+const homeDirectories = FileSystemService.getHomeDirectories();
 const mime = require('mime-types');
 const path = require('path');
 
@@ -96,13 +98,25 @@ export default createSelectable(props => {
   const ContainerComponent =
     selected || isSelecting ? SelectedContainer : Container;
 
+  let iconOverlay = undefined;
+  const homeDirs = Object.keys(homeDirectories)
+    .filter(key => homeDirectories[key].path === path.join(address, file.name))
+    .map(key => homeDirectories[key].icon);
+  if (homeDirs.length > 0) {
+    iconOverlay = homeDirs[0];
+  }
+
   return (
     <ContainerComponent
       style={containerStyle}
       ref={selectableRef}
       {...otherProps}
     >
-      {icon}
+      <div style={{ position: 'relative' }}>
+        {iconOverlay ? <StyledFontAwesomeIcon icon={iconOverlay} /> : null}
+        {icon}
+      </div>
+
       {rename ? (
         <Rename
           id="fileRename"
@@ -149,4 +163,12 @@ const Rename = styled.input`
   font-size: 12px;
   width: 100%;
   color: black;
+`;
+const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
+  position: absolute;
+  left: 20%;
+  width: 40% !important;
+  height: 40%;
+  top: 35%;
+  color: ${Color.homeDirectoryIconOnFileIcon};
 `;
