@@ -1,4 +1,4 @@
-const colors = {
+const colors: ColorInterface = {
   contentBackground: '#202020',
   fileIcon: '#6ac5fc',
   fileName: '#dddddd',

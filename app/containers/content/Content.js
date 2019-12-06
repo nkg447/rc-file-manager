@@ -24,7 +24,7 @@ class Content extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fileIconSize: 50,
+      fileIconSize: 55,
       files: [],
       address: props.fileManagerState.address,
       updateFiles: false

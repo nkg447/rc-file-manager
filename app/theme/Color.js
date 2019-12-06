@@ -1,7 +1,6 @@
 import DarkTheme from './DarkTheme';
 import LightTheme from './LightTheme';
 
-const currentTheme = DarkTheme;
-export default {
-  ...currentTheme.colors
-};
+const currentTheme: ColorInterface = DarkTheme.colors;
+
+export default currentTheme;

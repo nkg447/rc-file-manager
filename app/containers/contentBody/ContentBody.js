@@ -10,6 +10,7 @@ import ContextMenu from '../../components/contextMenu/contextMenu';
 import FileSystemService from '../../utils/FileSystemService';
 import SelectingRect from '../../components/selectingRect/selectingRect';
 import { Color } from '../../theme';
+import SubHeader from '../../components/subHeader/SubHeader';
 
 const path = require('path');
 const OS = require('os');
@@ -51,7 +52,8 @@ export default class ContentBody extends Component {
     );
     this.props.refresh();
     this.setState({
-      showContextMenu: false
+      showContextMenu: false,
+      selectedFiles: []
     });
   };
 
@@ -255,7 +257,11 @@ export default class ContentBody extends Component {
   };
 
   onRenameHandler = file => {
-    this.setState({ fileToRename: file, showContextMenu: false });
+    this.setState({
+      fileToRename: file,
+      showContextMenu: false,
+      selectedFiles: [file]
+    });
   };
 
   renameFileHandler = (file, newName) => {
@@ -320,6 +326,9 @@ export default class ContentBody extends Component {
     this.updateState();
     return (
       <>
+        {FileSystemService.isTrashDir(this.props.address) ? (
+          <SubHeader />
+        ) : null}
         <SelectingRect {...this.state.selectingRectBounds}></SelectingRect>
         <SelectableGroup
           allowClickWithoutSelected={false}

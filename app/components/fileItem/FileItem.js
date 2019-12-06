@@ -45,6 +45,7 @@ const addressToIcon = (address: String) => {
 };
 
 const isImage = address => {
+  if (address.indexOf('.') === -1) return false;
   const mimeType = mime.lookup(address);
   return mimeType && mimeType.startsWith('image');
 };
@@ -132,7 +133,9 @@ export default createSelectable(props => {
           type="text"
         />
       ) : (
-        <NameP>
+        <NameP
+          style={{ fontSize: Math.min(20, Math.max(13, fileIconSize / 4)) }}
+        >
           {selected
             ? file.name
             : file.name.substring(0, 28) + (file.name.length > 28 ? '...' : '')}
@@ -155,7 +158,7 @@ const SelectedContainer = styled(Container)`
 `;
 
 const NameP = styled.p`
-  font-size: 12px;
+  font-size: 13px;
   word-break: break-all;
   width: 100%;
 `;

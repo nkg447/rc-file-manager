@@ -59,11 +59,14 @@ const getHomeDirectories = () => {
   return availableDirs;
 };
 
-const deleteFile = (path, permanent = false) => {
+const deleteFile = async (path, permanent = false) => {
   if (!permanent) shell.moveItemToTrash(path);
   else
-    rimraf(path, err => {
-      console.log(`${path} deleted`);
+    await new Promise(res => {
+      rimraf(path, err => {
+        console.log(`${path} deleted`);
+        res();
+      });
     });
 };
 
