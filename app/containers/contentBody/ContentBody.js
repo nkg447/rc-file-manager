@@ -321,13 +321,22 @@ export default class ContentBody extends Component {
     }, delay);
   };
 
+  emptyBinHandler = () => {
+    this.state.files.forEach(this.onDeleteHandler);
+    this.setState({ files: [], selectedFiles: [] });
+  };
+
   render() {
     const { files, address, selectedFiles, fileIconSize } = this.state;
     this.updateState();
     return (
       <>
         {FileSystemService.isTrashDir(this.props.address) ? (
-          <SubHeader />
+          <SubHeader
+            onEmptyBin={
+              this.state.files.length != 0 ? this.emptyBinHandler : undefined
+            }
+          />
         ) : null}
         <SelectingRect {...this.state.selectingRectBounds}></SelectingRect>
         <SelectableGroup

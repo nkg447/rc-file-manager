@@ -4,12 +4,14 @@ import { Color } from '../../theme';
 import { inherits } from 'util';
 
 export default props => {
+  const { onEmptyBin, ...otherProps } = props;
+  const EmptyButton = onEmptyBin ? ButtonActive : ButtonInactive;
   return (
-    <Container>
+    <Container {...otherProps}>
       <P>Trash</P>
       <ButtonContainer>
         <ButtonInactive>Restore</ButtonInactive>
-        <ButtonActive>Empty</ButtonActive>
+        <EmptyButton onClick={onEmptyBin}>Empty</EmptyButton>
       </ButtonContainer>
     </Container>
   );
@@ -35,10 +37,12 @@ const Button = styled.button`
   padding-left: 10px;
   padding-right: 10px;
   border: 1px solid lightgray;
+  cursor: pointer;
 `;
 const ButtonInactive = styled(Button)`
   background-color: ${Color.sidebarBackground};
   color: ${Color.fileName};
+  cursor: not-allowed;
 `;
 const ButtonActive = styled(Button)`
   background-color: ${Color.selectedSidebarItemBackground};
