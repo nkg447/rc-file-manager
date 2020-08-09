@@ -6,7 +6,10 @@ const path = require('path');
 
 function getPathFromArgs() {
   const args = require('electron').remote.process.argv;
-  const _path = args.length > 1 ? args[args.length - 1] : os.homedir();
+  const _path =
+    args.length > 1
+      ? args[args.length - 1]
+      : localStorage.getItem('currentAddress') || os.homedir();
   return _path.startsWith('.') ? path.join(process.cwd(), _path) : _path;
 }
 
@@ -36,6 +39,7 @@ export default function fileManager(state = initialState, action) {
       newState.navigationStack.push(action.payload);
       newState.currentStackIndex++;
       newState.address = newState.navigationStack[newState.currentStackIndex];
+      localStorage.setItem('currentAddress', newState.address);
       return newState;
     }
 
@@ -50,6 +54,7 @@ export default function fileManager(state = initialState, action) {
         newState.currentStackIndex++;
       }
       newState.address = newState.navigationStack[newState.currentStackIndex];
+      localStorage.setItem('currentAddress', newState.address);
       return newState;
     }
 

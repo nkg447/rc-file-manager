@@ -7,6 +7,8 @@ import {
 import styled from 'styled-components';
 import styles from './SidebarTop.css';
 import { Color } from '../../theme';
+import { toogleTheme } from '../../theme/Color';
+const darkLightIcon = require('../../assets/dark_light.png');
 
 export default props => {
   const { navigateAddress, currentStackIndex, navigationStack } = props;
@@ -33,6 +35,7 @@ export default props => {
           icon={faChevronRight}
         />
       </Navigate>
+      <ThemeType onClick={toogleTheme} src={darkLightIcon}></ThemeType>
     </Container>
   );
 };
@@ -68,4 +71,8 @@ const ActiveIcon = styled(FontAwesomeIcon)`
     color: ${Color.sidebarBackground};
     background-color: ${Color.sidebar};
   }
+`;
+const ThemeType = styled.img`
+  width: 30px;
+  background-color: white;
 `;
